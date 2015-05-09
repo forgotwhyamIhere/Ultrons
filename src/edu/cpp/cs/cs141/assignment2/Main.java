@@ -7,7 +7,7 @@
  * <description-of-assignment>
  *
  * Team Ultrons
- *   <Jordan Tien, Jaime Lopez, Justin Albert James Galloway, Edward Quach>
+ *   <Jordan Tien, Jaime Lopez, Justin Galloway, Edward Quach>
  */
 package edu.cpp.cs.cs141.assignment2;
 
