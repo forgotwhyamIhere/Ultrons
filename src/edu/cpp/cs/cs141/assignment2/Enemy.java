@@ -26,7 +26,7 @@ public class Enemy extends ActiveAgents {
 	/**
 	 * Handles the killing of an enemy.
 	 */
-	public void death() {
+	public void die() {
 	}
 
 }

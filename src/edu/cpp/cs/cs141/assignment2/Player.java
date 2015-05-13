@@ -26,7 +26,7 @@ public class Player extends ActiveAgents {
 	/**
 	 * 
 	 */
-	public void takeDamage() {
+	public void loseLife() {
 	}
 
 	/**

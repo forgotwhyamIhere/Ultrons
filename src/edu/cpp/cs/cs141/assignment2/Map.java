@@ -15,17 +15,17 @@ package edu.cpp.cs.cs141.assignment2;
  * @author
  *
  */
-public class LevelDesign {
+public class Map {
 
 	/**
-	 * 
+	 * This is 
 	 */
 	private int[][] levelMap;
 
 	/**
 	 * Determines where the briefcase will be next game.
 	 */
-	public void randomize() {
+	public void initializeBoard() {
 	}
 
 	/**
