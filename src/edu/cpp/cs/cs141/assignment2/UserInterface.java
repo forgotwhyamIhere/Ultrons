@@ -28,7 +28,7 @@ public class UserInterface {
 	 */
 	private String[][] map = new String[9][9];
 	private int mapColumn = map.length;
-	int[] roomCoordinate = new int[] { 2, 4, 6 };
+	int[] roomCoordinate = new int[] { 1, 4, 7 };
 	int[] eLocation0 = new int[2];
 	int[] eLocation1 = new int[2];
 	int[] eLocation2 = new int[2];
@@ -71,28 +71,30 @@ public class UserInterface {
 	}
 
 	public void setRooms(int i, int j) {
+
 		if (i == map.length - 1 && j == 0) {
 			map[i][j] = "[S]";
-		} else if (i == 2 && j == 2)
-			map[i][j] = "[R]";
-		else if (i == 2 && j == 2)
-			map[i][j] = "[R]";
-		else if (i == 2 && j == 4)
-			map[i][j] = "[R]";
-		else if (i == 2 && j == 6)
-			map[i][j] = "[R]";
-		else if (i == 4 && j == 2)
-			map[i][j] = "[R]";
-		else if (i == 4 && j == 4)
-			map[i][j] = "[R]";
-		else if (i == 4 && j == 6)
-			map[i][j] = "[R]";
-		else if (i == 6 && j == 2)
-			map[i][j] = "[R]";
-		else if (i == 6 && j == 4)
-			map[i][j] = "[R]";
-		else if (i == 6 && j == 6)
-			map[i][j] = "[R]";
+		}
+		// else if (i == 2 && j == 2)
+		// map[i][j] = "[R]";
+		// else if (i == 2 && j == 2)
+		// map[i][j] = "[R]";
+		// else if (i == 2 && j == 4)
+		// map[i][j] = "[R]";
+		// else if (i == 2 && j == 6)
+		// map[i][j] = "[R]";
+		// else if (i == 4 && j == 2)
+		// map[i][j] = "[R]";
+		// else if (i == 4 && j == 4)
+		// map[i][j] = "[R]";
+		// else if (i == 4 && j == 6)
+		// map[i][j] = "[R]";
+		// else if (i == 6 && j == 2)
+		// map[i][j] = "[R]";
+		// else if (i == 6 && j == 4)
+		// map[i][j] = "[R]";
+		// else if (i == 6 && j == 6)
+		// map[i][j] = "[R]";
 		else if (i == eLocation1[0] && j == eLocation1[1])
 			map[i][j] = "[A]";
 		else if (i == eLocation2[0] && j == eLocation2[1])
@@ -106,24 +108,25 @@ public class UserInterface {
 		else if (i == eLocation6[0] && j == eLocation6[1])
 			map[i][j] = "[A]";
 		else if (i == aB[0] && j == aB[1])
-			map[i][j] = "[B]";
+			map[i][j] = "[b]";
 		else if (i == invin[0] && j == invin[1])
-			map[i][j] = "[I]";
+			map[i][j] = "[i]";
 		else if (i == rad[0] && j == rad[1])
 			map[i][j] = "[r]";
-		else {
-			// for (int a = 0; a < roomCoordinate.length; a++) {
-			// if (i == roomCoordinate[a]) {
-			// for (int b = 0; b < roomCoordinate.length; b++) {
-			// if (j == roomCoordinate[b]) {
-			// map[i][j] = "[R]";
-			// break;
-			// }
-			// }
-			// } else
+		// else if(){
+		// for (int a = 0; a < roomCoordinate.length; a++) {
+		// if (i == roomCoordinate[a]) {
+		// for (int b = 0; b < roomCoordinate.length; b++) {
+		// if (j == roomCoordinate[b]) {
+		// map[i][j] = "[R]";
+		// break;
+		else if (i == 1 || i == 4 | i == 7) {
+			if (j == 1 || j == 4 | j == 7)
+				map[i][j] = "[R]";
+			else
+				map[i][j] = "[*]";
+		} else
 			map[i][j] = "[*]";
-			// }
-		}
 	}
 
 	public void printMap() {
