@@ -18,7 +18,7 @@ package edu.cpp.cs.cs141.assignment2;
 public class Map {
 
 	/**
-	 * This is 
+	 * 
 	 */
 	private int[][] levelMap;
 

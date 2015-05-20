@@ -31,13 +31,4 @@ public class GameEngine {
 	public void randomPlacement() {
 	}
 
-	/**
-	 * Getter for location of player and objects on the board
-	 * 
-	 * @return
-	 */
-	public int[][] getLocation() {
-		return null;
-	}
-
 }
