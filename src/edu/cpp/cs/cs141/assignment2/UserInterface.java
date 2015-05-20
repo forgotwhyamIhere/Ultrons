@@ -27,6 +27,8 @@ public class UserInterface {
 	 */
 	private String[][] map = new String[9][9];
 
+	int[] roomCoordinate = new int[] { 2, 4, 6 };
+
 	/**
 	 * Handles how the movement will be controlled and the array is being moved
 	 * in. Can be a switch case or anything else.
@@ -57,41 +59,33 @@ public class UserInterface {
 		return null;
 	}
 
-	public void setRooms(int i, int j){
-		if (i == 2 && j == 2)
-			map[i][j] = "[R]";
-		else if (i == 2 && j == 2)
-			map[i][j] = "[R]";
-		else if (i == 2 && j == 4)
-			map[i][j] = "[R]";
-		else if (i == 2 && j == 6)
-			map[i][j] = "[R]";
-		else if (i == 4 && j == 2)
-			map[i][j] = "[R]";
-		else if (i == 4 && j == 4)
-			map[i][j] = "[R]";
-		else if (i == 4 && j == 6)
-			map[i][j] = "[R]";
-		else if (i == 6 && j == 2)
-			map[i][j] = "[R]";
-		else if (i == 6 && j == 4)
-			map[i][j] = "[R]";
-		else if (i == 6 && j == 6)
-			map[i][j] = "[R]";
-		else
-			map[i][j] = "[*]";
+	public void setRooms(int i, int j) {
+		if (i == map.length -1 && j == 0){
+			map[i][j] = "[S]";
+		}
+		else{
+			for (int a = 0; a < roomCoordinate.length; a++) {
+				if (i == roomCoordinate[a]) {
+					for (int b = 0;b < roomCoordinate.length;b++) {
+						if (j == roomCoordinate[b]) {
+							map[i][j] = "[R]";
+							break;
+						}
+					}
+				} else
+					map[i][j] = "[*]";
+			}
+		}
 	}
 
 	public void printMap() {
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
-				setRooms(i,j);
+				setRooms(i, j);
 				System.out.print(map[i][j]);
 			}
 			System.out.println();
 		}
 	}
-	
-	
-	
+
 }
