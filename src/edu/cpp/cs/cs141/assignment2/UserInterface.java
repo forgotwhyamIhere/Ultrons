@@ -11,6 +11,7 @@
  */
 package edu.cpp.cs.cs141.assignment2;
 
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -26,7 +27,7 @@ public class UserInterface {
 	 * 
 	 */
 	private String[][] map = new String[9][9];
-
+	private int mapColumn = map.length;
 	int[] roomCoordinate = new int[] { 2, 4, 6 };
 
 	/**
@@ -60,23 +61,62 @@ public class UserInterface {
 	}
 
 	public void setRooms(int i, int j) {
-		if (i == map.length -1 && j == 0){
+		if (i == map.length - 1 && j == 0) {
 			map[i][j] = "[S]";
-		}
-		else{
-			for (int a = 0; a < roomCoordinate.length; a++) {
-				if (i == roomCoordinate[a]) {
-					for (int b = 0;b < roomCoordinate.length;b++) {
-						if (j == roomCoordinate[b]) {
-							map[i][j] = "[R]";
-							break;
-						}
-					}
-				} else
+		} 
+		else if (i == 2 && j == 2)
+			   map[i][j] = "[R]";
+			  else if (i == 2 && j == 2)
+			   map[i][j] = "[R]";
+			  else if (i == 2 && j == 4)
+			   map[i][j] = "[R]";
+			  else if (i == 2 && j == 6)
+			   map[i][j] = "[R]";
+			  else if (i == 4 && j == 2)
+			   map[i][j] = "[R]";
+			  else if (i == 4 && j == 4)
+			   map[i][j] = "[R]";
+			  else if (i == 4 && j == 6)
+			   map[i][j] = "[R]";
+			  else if (i == 6 && j == 2)
+			   map[i][j] = "[R]";
+			  else if (i == 6 && j == 4)
+			   map[i][j] = "[R]";
+			  else if (i == 6 && j == 6)
+			   map[i][j] = "[R]";
+		else if ()
+			map[i][j] = "[A]";
+		else if ()
+			map[i][j] = "[A]";
+		else if ()
+			map[i][j] = "[A]";
+		else if ()
+			map[i][j] = "[A]";
+		else if ()
+			map[i][j] = "[A]";
+		else if ()
+			map[i][j] = "[A]";
+		else if ()
+			map[i][j] = "[I]";
+		else if ()
+			map[i][j] = "[B]";
+		else if ()
+			map[i][j] = "[R]";
+		else {
+//			for (int a = 0; a < roomCoordinate.length; a++) {
+//				if (i == roomCoordinate[a]) {
+//					for (int b = 0; b < roomCoordinate.length; b++) {
+//						if (j == roomCoordinate[b]) {
+//							map[i][j] = "[R]";
+//							break;
+//						}
+//					}
+//				} else
 					map[i][j] = "[*]";
-			}
+//			}
 		}
 	}
+
 
 	public void printMap() {
 		for (int i = 0; i < map.length; i++) {
@@ -88,4 +128,35 @@ public class UserInterface {
 		}
 	}
 
+	// will place in enemy class as constructor 
+	public void enemyG1(){
+        int[] eLocation= new int[2];
+        eLocation[0] = position 
+
+	}
+		
+		
+	
+	public boolean positionChecking(int a, int b){
+		if (a == map.length -1 && j == 0){
+			map[i][j] = "[S]";
+		}}
+	}
+
+	public int ninjaSpawning(int n) {
+		int n = coordinateGenerater();
+		if (n >= map.length - 4) {
+			if (n <= 5) {
+				ninjaSpawning();
+			}
+		}
+		return n;
+	}
+
+	public int coordinateGenerater() {
+		int number;
+		Random rN = new Random();
+		number = rN.nextInt(map.length - 1);
+		return number;
+	}
 }
