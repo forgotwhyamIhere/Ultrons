@@ -197,25 +197,35 @@ public class UserInterface {
 			} else
 				eLocation0[1] = b;
 		}
+		if (a == 1 || a == 4 | a == 7) {
+			if (b == 1 || b == 4 | b == 7)
+				positionChecking();
+			else
+				positionChecking();
+		}
 	}
 
 	public void additionalBullet() {
-		aB[0] = coordinateGenerater();
-		aB[1] = coordinateGenerater();
+		positionChecking();
+		aB[0] = eLocation0[0];
+		aB[1] = eLocation0[1];
 	}
 
 	public void invincibility() {
-		invin[0] = coordinateGenerater();
-		invin[1] = coordinateGenerater();
+		positionChecking();
+		invin[0] = eLocation0[0];
+		invin[1] = eLocation0[1];
 	}
 
 	public void radar() {
-		rad[0] = coordinateGenerater();
-		rad[1] = coordinateGenerater();
+		positionChecking();
+		rad[0] = eLocation0[0];
+		rad[1] = eLocation0[1];
 	}
 
 	// public int ninjaSpawning(int n) {
 	// int n = coordinateGenerater();
+	//
 	// return n;
 	// }
 
