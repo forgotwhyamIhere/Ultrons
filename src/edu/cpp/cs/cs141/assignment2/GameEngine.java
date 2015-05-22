@@ -16,6 +16,10 @@ package edu.cpp.cs.cs141.assignment2;
  *
  */
 public class GameEngine {
+	// public UserInterface uiClass;
+	// public GameEngine(UserInterface userInterface) {
+	// uiClass = userInterface;
+	// }
 
 	/**
 	 * Contains prompts of the beginning and end of the game, as well as message
