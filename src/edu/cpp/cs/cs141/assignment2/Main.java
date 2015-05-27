@@ -17,11 +17,16 @@ package edu.cpp.cs.cs141.assignment2;
  */
 public class Main {
 
-	/**Instantializes the game
+	/**
+	 * Instantializes the game
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-UserInterface uiClass = new UserInterface();
-uiClass.printMap();
+		UserInterface uiClass = new UserInterface();
+		uiClass.printMap();
+		// to soon be changed to
+		// uiClass.startMenu();
 	}
+
 }

@@ -18,9 +18,8 @@ import java.util.Random;
  *
  */
 public class ActiveAgents {
-	// Should this be protected?
-	//probably should add an addition get methods between this and the other classes
-	protected int[] location = new int[2];
+	// Should this be protected or private?
+	private int[] location = new int[2];
 	/**
 	 * 
 	 */
@@ -39,6 +38,10 @@ public class ActiveAgents {
 		checkNotAtRooms();
 	}
 
+	public void createPlayer(){
+		
+	}
+	
 	public void checkNotAtStart() {
 		if (location[0] == 8) {
 			if (location[1] == 0) {
@@ -47,6 +50,32 @@ public class ActiveAgents {
 		}
 	}
 
+	public int upArrayRowY() {
+		location[0]--;
+		return location[0];
+	}
+
+	public int downArrayRowY() {
+		location[0]++;
+		return location[0];
+	}
+
+	public int rightArrayColumnX() {
+		location[1]++;
+		return location[1];
+	}
+
+	public int leftArrayColumnX() {
+		location[1]--;
+		return location[1];
+	}
+	
+	public int directionGenerator() {
+		int number;
+		Random rN = new Random();
+		number = rN.nextInt(3);
+		return number;
+	}
 	public int getArrayRowY() {
 		return location[0];
 	}
@@ -78,7 +107,25 @@ public class ActiveAgents {
 			}
 		}
 	}
-
+	
+	public void move(int n){
+		switch (n){
+		case 1:
+			upArrayRowY();
+			break;
+		case 2:
+			downArrayRowY();
+			break;
+		case 3:
+			rightArrayColumnX();
+			break;
+		case 4:
+			leftArrayColumnX();
+			break;		
+		}
+	}
+	
+	
 	// // Jordan's solution with this class's fields
 	// public void positionChecking() {
 	// int a = coordinateGenerator();

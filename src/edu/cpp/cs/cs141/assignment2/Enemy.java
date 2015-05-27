@@ -33,17 +33,28 @@ public class Enemy extends ActiveAgents {
 
 	// Jordan's modified solution
 	public void checkNotNearStart() {
-		if (location[0] > 5) {
-			if (location[1] < 4) {
+		if (getArrayRowY() > 5) {
+			if (getArrayColumnX() < 3) {
 				createEnemy();
 			}
 		}
 	}
 
+
+	
+	public void moveEnemy(){
+		int n = directionGenerator();
+		n++;
+		move(n);
+	}
+	
 	/**
 	 * Handles the killing of an enemy.
+	 * In this case, the enemy is sent so far off the map that it will most likely not return.
 	 */
 	public void die() {
+		for(int i=0; i<999;i++)
+			rightArrayColumnX();
 	}
 
 }

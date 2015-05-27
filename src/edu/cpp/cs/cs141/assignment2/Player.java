@@ -15,15 +15,14 @@ package edu.cpp.cs.cs141.assignment2;
  * @author
  *
  */
-public class Player  extends ActiveAgents {
+public class Player extends ActiveAgents {
 	/**
 	 * 
 	 */
 	public Player() {
-		
 	}
 
-	
+
 	
 	/**
 	 * 
