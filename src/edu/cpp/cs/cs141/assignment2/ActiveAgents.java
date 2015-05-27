@@ -37,26 +37,90 @@ public class ActiveAgents {
 		location[0] = 8;
 		location[1] = 0;
 	}
-
-	public int upArrayRowY() {
-		location[0]--;
-		return location[0];
+	
+//	//to be used for loading purposes
+//	public void setPlayer() {
+//		location[0] = ?;
+//		location[1] = ?;
+//	}
+	
+	//If EQ was writing from scatch, EQ would probably use nested if instead of this unfamilar loop
+	public void moveCheck(int n) {
+		move(n);
+		  do {
+			   if (location[0] < 0){
+			    location[0]++;
+			    move(n);
+			   }
+			   else if (location[0] > 8){
+			    location[0]--;
+			    move(n);
+			   }
+			  } while (location[0] < 0 || location[0] > 8);
+			  do {
+			   if (location[1] < 0){
+			    location[1]++;
+			    move(n);
+			   }
+			   else if (location[1] > 8){
+			    location[1]--;
+			    move(n);
+			   }
+			  } while (location[1] < 0 || location[1] > 8);
 	}
-
-	public int downArrayRowY() {
-		location[0]++;
-		return location[0];
+	
+	public void move(int n) {
+		switch (n) {
+		case 1:
+			location[0]--;
+			break;
+		case 2:
+			location[1]--;
+			break;
+		case 3:
+			location[0]++;
+			break;
+		case 4:
+			location[1]++;
+			break;
+		}
 	}
-
-	public int rightArrayColumnX() {
-		location[1]++;
-		return location[1];
-	}
-
-	public int leftArrayColumnX() {
-		location[1]--;
-		return location[1];
-	}
+	
+//	public int upArrayRowY() {
+//		location[0]--;
+//		return location[0];
+//	}
+//
+//	public int downArrayRowY() {
+//		location[0]++;
+//		return location[0];
+//	}
+//
+//	public int rightArrayColumnX() {
+//		location[1]++;
+//		return location[1];
+//	}
+//
+//	public int leftArrayColumnX() {
+//		location[1]--;
+//		return location[1];
+//	}
+//	public void move(int n) {
+//		switch (n) {
+//		case 1:
+//			upArrayRowY();
+//			break;
+//		case 2:
+//			leftArrayColumnX();
+//			break;
+//		case 3:
+//			downArrayRowY();
+//			break;
+//		case 4:
+//			rightArrayColumnX();
+//			break;
+//		}
+//	}
 
 	public int directionGenerator() {
 		int number;
@@ -97,23 +161,13 @@ public class ActiveAgents {
 		}
 	}
 
-	public void move(int n) {
-		switch (n) {
-		case 1:
-			upArrayRowY();
-			break;
-		case 2:
-			downArrayRowY();
-			break;
-		case 3:
-			rightArrayColumnX();
-			break;
-		case 4:
-			leftArrayColumnX();
-			break;
-		}
-	}
 
+
+
+
+	
+	
+	
 	// // Jordan's solution with this class's fields
 	// public void positionChecking() {
 	// int a = coordinateGenerator();

@@ -40,19 +40,20 @@ public class Enemy extends ActiveAgents {
 		}
 	}
 
+
 	public void moveEnemy() {
 		int n = directionGenerator();
 		n++;
-		move(n);
+		moveCheck(n);
 	}
 
 	/**
 	 * Handles the killing of an enemy. In this case, the enemy is sent so far
-	 * off the map that it will most likely not return.
+	 * off the map that it will most likely not return. 
 	 */
 	public void die() {
 		for (int i = 0; i < 999; i++)
-			rightArrayColumnX();
+			move(4);
 	}
 
 }

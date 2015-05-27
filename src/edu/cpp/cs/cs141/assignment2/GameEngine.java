@@ -77,16 +77,17 @@ public class GameEngine {
 
 	public void start() {
 		uiClass.printMap();
-		uiClass.pickDirection();
+		cycle();
+		uiClass.displayLocation(player.getArrayRowY(), player.getArrayColumnX());
 	}
 
-	public void cycle(){
+	public void cycle() {
 		uiClass.pickDirection();
-
 		player.move(uiClass.getResponse());
+		movingEnemies();
 		uiClass.printMap();
 	}
-	
+
 	public void setMap(int i, int j) {
 		// to be replaced with PowerUps class constructor
 		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
@@ -113,7 +114,7 @@ public class GameEngine {
 		// else if (i == 6 && j == 6)
 		// map[i][j] = "[R]";
 		// checking for rowY
-
+		//
 		// else if (i == 1 || i == 4 | i == 7) {
 		// // and checking for columnX
 		// if (j == 1 || j == 4 | j == 7) {
@@ -163,8 +164,6 @@ public class GameEngine {
 		makeEnemy6();
 	}
 
-	// Is it IF or IF ELSE? to prevent overlap. Probably should be in GameEngine
-	// class, somehow
 	public void makeEnemy2() {
 		enemy2 = new Enemy();
 		checkEnemy2();
@@ -292,18 +291,145 @@ public class GameEngine {
 		return map[a][b];
 	}
 
-	/**
-	 * Contains prompts of the beginning and end of the game, as well as message
-	 * handling
-	 */
-	public void playGame() {
+	// /**
+	// * Contains prompts of the beginning and end of the game, as well as
+	// message
+	// * handling
+	// */
+	// public void playGame() {
+	// }
+	//
+	// /**
+	// * Handles the random placement of enemies, items and briefcase on the
+	// * playing board array.
+	// */
+	// public void randomPlacement() {
+	// }
+
+	// // Is there a shorter way to do this?
+	// currently does not check for boundaries
+	public void movingEnemies() {
+		enemy1.moveEnemy();
+		moveEnemy2();
+		moveEnemy3();
+		moveEnemy4();
+		moveEnemy5();
+		moveEnemy6();
 	}
 
-	/**
-	 * Handles the random placement of enemies, items and briefcase on the
-	 * playing board array.
-	 */
-	public void randomPlacement() {
+	public void moveEnemy2() {
+		enemy2.moveEnemy();
+		checkMoveEnemy2();
+	}
+
+	public void checkMoveEnemy2() {
+		if (enemy2.getArrayRowY() == enemy1.getArrayRowY()) {
+			if (enemy2.getArrayColumnX() == enemy1.getArrayColumnX()) {
+				moveEnemy2();
+			}
+		}
+	}
+
+	public void moveEnemy3() {
+		enemy3 = new Enemy();
+		checkMoveEnemy3();
+	}
+
+	public void checkMoveEnemy3() {
+		if (enemy3.getArrayRowY() == enemy1.getArrayRowY()) {
+			if (enemy3.getArrayColumnX() == enemy1.getArrayColumnX()) {
+				moveEnemy3();
+			}
+		}
+		if (enemy3.getArrayRowY() == enemy2.getArrayRowY()) {
+			if (enemy3.getArrayColumnX() == enemy2.getArrayColumnX()) {
+				moveEnemy3();
+			}
+		}
+	}
+
+	public void moveEnemy4() {
+		enemy4 = new Enemy();
+		checkMoveEnemy4();
+	}
+
+	public void checkMoveEnemy4() {
+		if (enemy4.getArrayRowY() == enemy1.getArrayRowY()) {
+			if (enemy4.getArrayColumnX() == enemy1.getArrayColumnX()) {
+				moveEnemy4();
+			}
+		}
+		if (enemy4.getArrayRowY() == enemy2.getArrayRowY()) {
+			if (enemy4.getArrayColumnX() == enemy2.getArrayColumnX()) {
+				moveEnemy4();
+			}
+		}
+		if (enemy4.getArrayRowY() == enemy3.getArrayRowY()) {
+			if (enemy4.getArrayColumnX() == enemy3.getArrayColumnX()) {
+				moveEnemy4();
+			}
+		}
+	}
+
+	public void moveEnemy5() {
+		enemy5 = new Enemy();
+		checkMoveEnemy5();
+	}
+
+	public void checkMoveEnemy5() {
+		if (enemy5.getArrayRowY() == enemy1.getArrayRowY()) {
+			if (enemy5.getArrayColumnX() == enemy1.getArrayColumnX()) {
+				moveEnemy5();
+			}
+		}
+		if (enemy5.getArrayRowY() == enemy2.getArrayRowY()) {
+			if (enemy5.getArrayColumnX() == enemy2.getArrayColumnX()) {
+				moveEnemy5();
+			}
+		}
+		if (enemy5.getArrayRowY() == enemy3.getArrayRowY()) {
+			if (enemy5.getArrayColumnX() == enemy3.getArrayColumnX()) {
+				moveEnemy5();
+			}
+		}
+		if (enemy5.getArrayRowY() == enemy4.getArrayRowY()) {
+			if (enemy5.getArrayColumnX() == enemy4.getArrayColumnX()) {
+				moveEnemy5();
+			}
+		}
+	}
+
+	public void moveEnemy6() {
+		enemy6 = new Enemy();
+		checkMoveEnemy6();
+	}
+
+	public void checkMoveEnemy6() {
+		if (enemy6.getArrayRowY() == enemy1.getArrayRowY()) {
+			if (enemy6.getArrayColumnX() == enemy1.getArrayColumnX()) {
+				moveEnemy6();
+			}
+		}
+		if (enemy6.getArrayRowY() == enemy2.getArrayRowY()) {
+			if (enemy6.getArrayColumnX() == enemy2.getArrayColumnX()) {
+				moveEnemy6();
+			}
+		}
+		if (enemy6.getArrayRowY() == enemy3.getArrayRowY()) {
+			if (enemy6.getArrayColumnX() == enemy3.getArrayColumnX()) {
+				moveEnemy6();
+			}
+		}
+		if (enemy6.getArrayRowY() == enemy4.getArrayRowY()) {
+			if (enemy6.getArrayColumnX() == enemy4.getArrayColumnX()) {
+				moveEnemy6();
+			}
+		}
+		if (enemy6.getArrayRowY() == enemy5.getArrayRowY()) {
+			if (enemy6.getArrayColumnX() == enemy5.getArrayColumnX()) {
+				moveEnemy6();
+			}
+		}
 	}
 
 }

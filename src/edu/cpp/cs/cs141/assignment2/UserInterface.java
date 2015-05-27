@@ -29,35 +29,35 @@ public class UserInterface {
 	private GameEngine geClass = new GameEngine(this);
 	private int response;
 
-	/**
-	 * Handles how the movement will be controlled and the array is being moved
-	 * in. Can be a switch case or anything else.
-	 */
-	public void playControl() {
-	}
-
-	/**
-	 * Controls the usage and effects of powerups hidden around the map.
-	 */
-	public void powerUps() {
-	}
-
-	/**
-	 * Controls the enemy’s actions, duh. Includes what happens when caught by
-	 * them, change in behavior when player is sighted, etc.
-	 */
-	public void enemyActions(int n) {
-
-	}
-
-	/**
-	 * Getter for location of player and objects on the board
-	 * 
-	 * @return
-	 */
-	public int[][] getLocation() {
-		return null;
-	}
+//	/**
+//	 * Handles how the movement will be controlled and the array is being moved
+//	 * in. Can be a switch case or anything else.
+//	 */
+//	public void playControl() {
+//	}
+//
+//	/**
+//	 * Controls the usage and effects of powerups hidden around the map.
+//	 */
+//	public void powerUps() {
+//	}
+//
+//	/**
+//	 * Controls the enemy’s actions, duh. Includes what happens when caught by
+//	 * them, change in behavior when player is sighted, etc.
+//	 */
+//	public void enemyActions(int n) {
+//
+//	}
+//
+//	/**
+//	 * Getter for location of player and objects on the board
+//	 * 
+//	 * @return
+//	 */
+//	public int[][] getLocation() {
+//		return null;
+//	}
 
 	public void gameStart() {
 		geClass.start();
@@ -180,4 +180,12 @@ public class UserInterface {
 	 * current values Load-set values according to the save date Hows this
 	 * works, requires the rest of the program to be written
 	 */
+	
+	//displays current location values for array 
+	public void displayLocation(int a, int b){
+		System.out.println();
+		System.out.println(a);
+		System.out.println(b);
+	}
+	
 }
