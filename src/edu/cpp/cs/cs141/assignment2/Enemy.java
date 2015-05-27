@@ -44,7 +44,7 @@ public class Enemy extends ActiveAgents {
 	public void moveEnemy() {
 		int n = directionGenerator();
 		n++;
-		moveCheck(n);
+		move(n);
 	}
 
 	/**

@@ -76,16 +76,20 @@ public class GameEngine {
 	}
 
 	public void start() {
-		uiClass.printMap();
-		cycle();
-		uiClass.displayLocation(player.getArrayRowY(), player.getArrayColumnX());
+		makeEnemies();
+		
+		while (player.getArrayRowY() < 9){
+			cycle();
+		}
+		
+//		uiClass.displayLocation(player.getArrayRowY(), player.getArrayColumnX());
 	}
 
 	public void cycle() {
+		uiClass.printMap();
 		uiClass.pickDirection();
 		player.move(uiClass.getResponse());
 		movingEnemies();
-		uiClass.printMap();
 	}
 
 	public void setMap(int i, int j) {

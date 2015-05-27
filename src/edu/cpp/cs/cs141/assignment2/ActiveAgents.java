@@ -45,30 +45,30 @@ public class ActiveAgents {
 //	}
 	
 	//If EQ was writing from scatch, EQ would probably use nested if instead of this unfamilar loop
-	public void moveCheck(int n) {
-		move(n);
-		  do {
-			   if (location[0] < 0){
-			    location[0]++;
-			    move(n);
-			   }
-			   else if (location[0] > 8){
-			    location[0]--;
-			    move(n);
-			   }
-			  } while (location[0] < 0 || location[0] > 8);
-			  do {
-			   if (location[1] < 0){
-			    location[1]++;
-			    move(n);
-			   }
-			   else if (location[1] > 8){
-			    location[1]--;
-			    move(n);
-			   }
-			  } while (location[1] < 0 || location[1] > 8);
-	}
-	
+//	public void moveCheck(int n) {
+//		move(n);
+//		  do {
+//			   if (location[0] < 0){
+//			    location[0]++;
+//			    move(n);
+//			   }
+//			   else if (location[0] > 8){
+//			    location[0]--;
+//			    move(n);
+//			   }
+//			  } while (location[0] < 0 || location[0] > 8);
+//			  do {
+//			   if (location[1] < 0){
+//			    location[1]++;
+//			    move(n);
+//			   }
+//			   else if (location[1] > 8){
+//			    location[1]--;
+//			    move(n);
+//			   }
+//			  } while (location[1] < 0 || location[1] > 8);
+//	}
+//	
 	public void move(int n) {
 		switch (n) {
 		case 1:

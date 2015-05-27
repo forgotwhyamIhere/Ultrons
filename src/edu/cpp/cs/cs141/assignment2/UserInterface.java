@@ -26,7 +26,7 @@ public class UserInterface {
 	/**
 	 * 
 	 */
-	private GameEngine geClass = new GameEngine(this);
+//	private GameEngine geClass = new GameEngine(this);
 	private int response;
 
 //	/**
@@ -64,7 +64,6 @@ public class UserInterface {
 	}
 
 	public void printMap() {
-		geClass.makeEnemies();
 		for (int i = 0; i < geClass.getMapLength(); i++) {
 			for (int j = 0; j < geClass.getMapLength(i); j++) {
 				geClass.setMap(i, j);
