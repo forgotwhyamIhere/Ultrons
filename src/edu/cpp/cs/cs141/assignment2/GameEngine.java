@@ -23,7 +23,7 @@ public class GameEngine {
 	/**
 	 * 
 	 */
-	private Player player = new Player();
+	private ActiveAgents player = new ActiveAgents();
 	/**
 	 * 
 	 */
@@ -54,19 +54,20 @@ public class GameEngine {
 	/**
 	 * 
 	 */
-	private ActiveAgents aB = new ActiveAgents();
+	private PowerUps aB = new PowerUps();
 	/**
 	 * 
 	 */
-	private ActiveAgents invin = new ActiveAgents();
+	private PowerUps invin = new PowerUps();
 	/**
 	 * 
 	 */
-	private ActiveAgents rad = new ActiveAgents();
+	private PowerUps rad = new PowerUps();
 	/**
 	 * 
 	 */
 	public UserInterface uiClass;
+
 	/**
 	 * @param userInterface
 	 */
@@ -74,10 +75,22 @@ public class GameEngine {
 		uiClass = userInterface;
 	}
 
+	public void start() {
+		uiClass.printMap();
+		uiClass.pickDirection();
+	}
+
+	public void cycle(){
+		uiClass.pickDirection();
+
+		player.move(uiClass.getResponse());
+		uiClass.printMap();
+	}
+	
 	public void setMap(int i, int j) {
-		// to be replaced with Player class constructor
-		if (i == map.length - 1 && j == 0) {
-			map[i][j] = "[S]";
+		// to be replaced with PowerUps class constructor
+		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
+			map[i][j] = "[P]";
 		}
 		// else if (i == 2 && j == 2)
 		// map[i][j] = "[R]";

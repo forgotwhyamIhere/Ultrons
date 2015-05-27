@@ -24,9 +24,10 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		UserInterface uiClass = new UserInterface();
-		uiClass.printMap();
-		// to soon be changed to
-		// uiClass.startMenu();
+		uiClass.gameStart();
+//		uiClass.printMap();
+//		// to soon be changed to maybe
+//		// uiClass.startMenu();
 	}
 
 }

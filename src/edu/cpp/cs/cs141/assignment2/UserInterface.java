@@ -11,7 +11,7 @@
  */
 package edu.cpp.cs.cs141.assignment2;
 
-import java.util.Random;
+//import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -20,14 +20,14 @@ import java.util.Scanner;
  */
 public class UserInterface {
 	/**
-	 * 
+	 *
 	 */
-	private GameEngine geClass = new GameEngine(this);
+	private Scanner kb = new Scanner(System.in);
 	/**
 	 * 
 	 */
-	private Scanner kb = new Scanner(System.in);
-
+	private GameEngine geClass = new GameEngine(this);
+	private int response;
 
 	/**
 	 * Handles how the movement will be controlled and the array is being moved
@@ -59,7 +59,9 @@ public class UserInterface {
 		return null;
 	}
 
-
+	public void gameStart() {
+		geClass.start();
+	}
 
 	public void printMap() {
 		geClass.makeEnemies();
@@ -155,7 +157,19 @@ public class UserInterface {
 	// return number;
 	// }
 
+	public int getResponse() {
+		return response;
+	}
 
+	public void pickDirection() {
+		System.out
+				.println("In which direction, would you like to move toward? \n"
+						+ "1. Up \n"
+						+ "2. Left \n"
+						+ "3. Down \n"
+						+ "4. Right");
+		response = kb.nextInt();
+	}
 
 	// method not complete
 	public void hitEnterToContinue() {

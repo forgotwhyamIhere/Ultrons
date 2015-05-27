@@ -15,20 +15,33 @@ package edu.cpp.cs.cs141.assignment2;
  * @author
  *
  */
-public class Player extends ActiveAgents {
+public class PowerUps extends ActiveAgents {
 	/**
 	 * 
 	 */
-	public Player() {
+	public PowerUps() {
+		createPowerup();
 	}
 
-
-	
-	/**
-	 * 
-	 */
-	public void loseLife() {
+	public void createPowerup() {
+		createLocation();
+		checkNotAtStart();
+		checkNotAtRooms();
 	}
+
+	public void checkNotAtStart() {
+		if (getArrayRowY() == 8) {
+			if (getArrayColumnX() == 0) {
+				createPowerup();
+			}
+		}
+	}
+
+	// /**
+	// *
+	// */
+	// public void loseLife() {
+	// }
 
 	/**
 	 * 

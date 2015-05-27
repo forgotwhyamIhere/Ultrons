@@ -20,34 +20,22 @@ import java.util.Random;
 public class ActiveAgents {
 	// Should this be protected or private?
 	private int[] location = new int[2];
-	/**
-	 * 
-	 */
-	private int health;
+
+	// /**
+	// *
+	// */
+	// private int health;
 
 	/**
 	 * 
 	 */
 	public ActiveAgents() {
-		createPowerup();
+		createPlayer();
 	}
 
-	public void createPowerup() {
-		crateLocation();
-		checkNotAtStart();
-		checkNotAtRooms();
-	}
-
-	public void createPlayer(){
-		
-	}
-	
-	public void checkNotAtStart() {
-		if (location[0] == 8) {
-			if (location[1] == 0) {
-				createPowerup();
-			}
-		}
+	public void createPlayer() {
+		location[0] = 8;
+		location[1] = 0;
 	}
 
 	public int upArrayRowY() {
@@ -69,13 +57,14 @@ public class ActiveAgents {
 		location[1]--;
 		return location[1];
 	}
-	
+
 	public int directionGenerator() {
 		int number;
 		Random rN = new Random();
 		number = rN.nextInt(3);
 		return number;
 	}
+
 	public int getArrayRowY() {
 		return location[0];
 	}
@@ -91,7 +80,7 @@ public class ActiveAgents {
 		return number;
 	}
 
-	public void crateLocation() {
+	public void createLocation() {
 		location[0] = coordinateGenerator();
 		location[1] = coordinateGenerator();
 	}
@@ -103,13 +92,13 @@ public class ActiveAgents {
 		if (n == 1 || n == 4 | n == 7) {
 			// and checking for columnX
 			if (m == 1 || m == 4 | m == 7) {
-				crateLocation();
+				createLocation();
 			}
 		}
 	}
-	
-	public void move(int n){
-		switch (n){
+
+	public void move(int n) {
+		switch (n) {
 		case 1:
 			upArrayRowY();
 			break;
@@ -121,11 +110,10 @@ public class ActiveAgents {
 			break;
 		case 4:
 			leftArrayColumnX();
-			break;		
+			break;
 		}
 	}
-	
-	
+
 	// // Jordan's solution with this class's fields
 	// public void positionChecking() {
 	// int a = coordinateGenerator();

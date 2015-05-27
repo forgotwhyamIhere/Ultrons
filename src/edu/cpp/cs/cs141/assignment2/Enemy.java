@@ -11,7 +11,7 @@
  */
 package edu.cpp.cs.cs141.assignment2;
 
-import java.util.Random;
+//import java.util.Random;
 
 /**
  * @author
@@ -26,7 +26,7 @@ public class Enemy extends ActiveAgents {
 	}
 
 	public void createEnemy() {
-		crateLocation();
+		createLocation();
 		checkNotNearStart();
 		checkNotAtRooms();
 	}
@@ -40,20 +40,18 @@ public class Enemy extends ActiveAgents {
 		}
 	}
 
-
-	
-	public void moveEnemy(){
+	public void moveEnemy() {
 		int n = directionGenerator();
 		n++;
 		move(n);
 	}
-	
+
 	/**
-	 * Handles the killing of an enemy.
-	 * In this case, the enemy is sent so far off the map that it will most likely not return.
+	 * Handles the killing of an enemy. In this case, the enemy is sent so far
+	 * off the map that it will most likely not return.
 	 */
 	public void die() {
-		for(int i=0; i<999;i++)
+		for (int i = 0; i < 999; i++)
 			rightArrayColumnX();
 	}
 
