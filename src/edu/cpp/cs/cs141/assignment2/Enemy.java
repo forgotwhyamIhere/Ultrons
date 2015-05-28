@@ -11,6 +11,8 @@
  */
 package edu.cpp.cs.cs141.assignment2;
 
+import java.util.Random;
+
 //import java.util.Random;
 
 /**
@@ -40,7 +42,13 @@ public class Enemy extends ActiveAgents {
 		}
 	}
 
-
+	public int directionGenerator() {
+		int number;
+		Random rN = new Random();
+		number = rN.nextInt(3);
+		return number;
+	}
+	
 	public void moveEnemy() {
 		int n = directionGenerator();
 		n++;

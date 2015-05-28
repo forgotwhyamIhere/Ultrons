@@ -37,9 +37,7 @@ public class PowerUps extends ActiveAgents {
 		}
 	}
 
-	// /**
-	// *
-	// */
+
 	// public void loseLife() {
 	// }
 

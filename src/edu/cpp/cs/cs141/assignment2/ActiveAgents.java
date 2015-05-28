@@ -38,13 +38,13 @@ public class ActiveAgents {
 		location[1] = 0;
 	}
 	
-//	//to be used for loading purposes
-//	public void setPlayer() {
-//		location[0] = ?;
-//		location[1] = ?;
-//	}
+	//to be used for loading purposes
+	public void setPlayer(int b, int c) {
+		location[0] = b;
+		location[1] = c;
+	}
 	
-	//If EQ was writing from scatch, EQ would probably use nested if instead of this unfamilar loop
+	//Jordan's part to fix to check for boundaries and maybe rooms too
 //	public void moveCheck(int n) {
 //		move(n);
 //		  do {
@@ -86,48 +86,26 @@ public class ActiveAgents {
 		}
 	}
 	
-//	public int upArrayRowY() {
-//		location[0]--;
-//		return location[0];
-//	}
-//
-//	public int downArrayRowY() {
-//		location[0]++;
-//		return location[0];
-//	}
-//
-//	public int rightArrayColumnX() {
-//		location[1]++;
-//		return location[1];
-//	}
-//
-//	public int leftArrayColumnX() {
-//		location[1]--;
-//		return location[1];
-//	}
-//	public void move(int n) {
-//		switch (n) {
-//		case 1:
-//			upArrayRowY();
-//			break;
-//		case 2:
-//			leftArrayColumnX();
-//			break;
-//		case 3:
-//			downArrayRowY();
-//			break;
-//		case 4:
-//			rightArrayColumnX();
-//			break;
-//		}
-//	}
-
-	public int directionGenerator() {
-		int number;
-		Random rN = new Random();
-		number = rN.nextInt(3);
-		return number;
+	
+	public void unMove(int n) {
+		switch (n) {
+		case 1:
+			location[0]++;
+			break;
+		case 2:
+			location[1]++;
+			break;
+		case 3:
+			location[0]--;
+			break;
+		case 4:
+			location[1]--;
+			break;
+		}
 	}
+
+
+
 
 	public int getArrayRowY() {
 		return location[0];
@@ -166,31 +144,4 @@ public class ActiveAgents {
 
 
 	
-	
-	
-	// // Jordan's solution with this class's fields
-	// public void positionChecking() {
-	// int a = coordinateGenerator();
-	// int b = coordinateGenerator();
-	// if (a <= 5) {
-	// location[0] = a;
-	// location[1] = b;
-	// } else if (b >= 4) {
-	// location[0] = a;
-	// location[1] = b;
-	// }
-	// }
-	//
-	// // Jordan's original solution
-	// public void positionChecking() {
-	// int a = coordinateGenerator();
-	// int b = coordinateGenerator();
-	// if (a <= map.length - 4) {
-	// eLocation0[0] = a;
-	// eLocation0[1] = b;
-	// } else if (b >= map.length - 5) {
-	// eLocation0[0] = a;
-	// eLocation0[1] = b;
-	// }
-	// }
 }

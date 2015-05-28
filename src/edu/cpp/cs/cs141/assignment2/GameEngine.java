@@ -19,53 +19,6 @@ public class GameEngine {
 	/**
 	 * 
 	 */
-	private String[][] map = new String[9][9];
-	/**
-	 * 
-	 */
-	private ActiveAgents player = new ActiveAgents();
-	/**
-	 * 
-	 */
-	private Enemy enemy1;
-	/**
-	 * 
-	 */
-	private Enemy enemy2;
-	/**
-	 * 
-	 */
-	private Enemy enemy3;
-	/**
-	 * 
-	 */
-	private Enemy enemy4;
-	/**
-	 * 
-	 */
-	private Enemy enemy5;
-	/**
-	 * 
-	 */
-	private Enemy enemy6;
-	// int[] aB = new int[2];
-	// int[] invin = new int[2];
-	// int[] rad = new int[2];
-	/**
-	 * 
-	 */
-	private PowerUps aB = new PowerUps();
-	/**
-	 * 
-	 */
-	private PowerUps invin = new PowerUps();
-	/**
-	 * 
-	 */
-	private PowerUps rad = new PowerUps();
-	/**
-	 * 
-	 */
 	public UserInterface uiClass;
 
 	/**
@@ -75,56 +28,139 @@ public class GameEngine {
 		uiClass = userInterface;
 	}
 
-	public void start() {
-		makeEnemies();
-		
-		while (player.getArrayRowY() < 9){
-			cycle();
-		}
-		
-//		uiClass.displayLocation(player.getArrayRowY(), player.getArrayColumnX());
+	/**
+	 * 
+	 */
+	private String[][] map = new String[9][9];
+	/**
+	 * 
+	 */
+	private ActiveAgents player = new ActiveAgents();
+	private Enemy enemy1;
+	private Enemy enemy2;
+	private Enemy enemy3;
+	private Enemy enemy4;
+	private Enemy enemy5;
+	private Enemy enemy6;
+	private PowerUps aB = new PowerUps();
+	private PowerUps invin = new PowerUps();
+	private PowerUps rad = new PowerUps();
+
+	private boolean debugMode = false;
+
+	public void debugging() {
+		debugMode = true;
+		uiClass.runDebug();
+		showMap();
 	}
 
-	public void cycle() {
-		uiClass.printMap();
-		uiClass.pickDirection();
-		player.move(uiClass.getResponse());
-		movingEnemies();
+	// incomplete b/c does not consider looking view
+	public void showMap() {
+		if (debugMode)
+			uiClass.printMap();
+		else {
+			uiClass.printBasicMap();
+		}
+	}
+
+	public void newStart() {
+		// uiClass.lookOptions();
+		makeEnemies();
+		turns();
+	}
+
+	// uiClass.displayLocation(player.getArrayRowY(),
+	// player.getArrayColumnX());
+
+	public void turns() {
+		while (player.getArrayRowY() < 9) {
+			showMap();
+			looking();
+			movingEnemies(); // remember to fix this method chain/loop
+		}
+	}
+
+	// public void cycle() {
+	// // showMap();
+	// uiClass.printMap();
+	// uiClass.pickDirection();
+	// player.move(uiClass.getResponse());
+	// movingEnemies();
+	// }
+
+	public void looking() {
+		lookingOptions(uiClass.lookOptions());
+	}
+
+	public void lookingOptions(int n) {
+		switch (n) {
+		case 1:
+			uiClass.pickDirection();
+			// insert method here showing map of direction chosen using
+			// (uiClass.getResponse())
+			mRs();
+			break;
+		case 2:
+			mRs();
+			break;
+		case 3:
+			// insert saving method HERE
+			break;
+		case 4:
+			debugging();
+			looking();
+			break;
+		}
+	}
+
+	public void mRs() {
+		movingOrShooting(uiClass.moveOrShoot());
+	}
+
+	public void movingOrShooting(int n) {
+		switch (n) {
+		case 1:
+			move();
+			break;
+		case 2:
+			// insert check for enemy when shooting Here
+			break;
+		case 3:
+			// insert saving method HERE
+			break;
+		case 4:
+			debugging();
+			mRs();
+			break;
+		}
+	}
+
+	public void move() {
+		player.move(uiClass.pickDirection());
+		// insert method to check position for powerups & boundaries HERE
+	}
+
+	public void shoot(){
+		//insert method for check direction to see if there is an enemy
+		//if there is return turn for uiClass.
+	}
+	public void setBasicMap(int i, int j) {
+		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
+			map[i][j] = "[P]";
+		} else if (i == 1 || i == 4 || i == 7) {
+			if (j == 1 || j == 4 || j == 7)
+				map[i][j] = "[R]";
+			else
+				map[i][j] = "[*]";
+		} else
+			map[i][j] = "[*]";
 	}
 
 	public void setMap(int i, int j) {
-		// to be replaced with PowerUps class constructor
+		// to be replaced with class constructor loop?
 		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
 			map[i][j] = "[P]";
-		}
-		// else if (i == 2 && j == 2)
-		// map[i][j] = "[R]";
-		// else if (i == 2 && j == 2)
-		// map[i][j] = "[R]";
-		// else if (i == 2 && j == 4)
-		// map[i][j] = "[R]";
-		// else if (i == 2 && j == 6)
-		// map[i][j] = "[R]";
-		// else if (i == 4 && j == 2)
-		// map[i][j] = "[R]";
-		// else if (i == 4 && j == 4)
-		// map[i][j] = "[R]";
-		// else if (i == 4 && j == 6)
-		// map[i][j] = "[R]";
-		// else if (i == 6 && j == 2)
-		// map[i][j] = "[R]";
-		// else if (i == 6 && j == 4)
-		// map[i][j] = "[R]";
-		// else if (i == 6 && j == 6)
-		// map[i][j] = "[R]";
-		// checking for rowY
-		//
-		// else if (i == 1 || i == 4 | i == 7) {
-		// // and checking for columnX
-		// if (j == 1 || j == 4 | j == 7) {
-		// map[i][j] = "[R]"; }
-		// }
-		else if (i == enemy1.getArrayRowY() && j == enemy1.getArrayColumnX())
+		} else if (i == enemy1.getArrayRowY() && j == enemy1.getArrayColumnX())
 			map[i][j] = "[A]";
 		else if (i == enemy2.getArrayRowY() && j == enemy2.getArrayColumnX())
 			map[i][j] = "[A]";
@@ -142,13 +178,6 @@ public class GameEngine {
 			map[i][j] = "[i]";
 		else if (i == rad.getArrayRowY() && j == rad.getArrayColumnX())
 			map[i][j] = "[r]";
-		// else if(){
-		// for (int a = 0; a < roomCoordinate.length; a++) {
-		// if (i == roomCoordinate[a]) {
-		// for (int b = 0; b < roomCoordinate.length; b++) {
-		// if (j == roomCoordinate[b]) {
-		// map[i][j] = "[R]";
-		// break;
 		else if (i == 1 || i == 4 || i == 7) {
 			if (j == 1 || j == 4 || j == 7)
 				map[i][j] = "[R]";
@@ -156,6 +185,18 @@ public class GameEngine {
 				map[i][j] = "[*]";
 		} else
 			map[i][j] = "[*]";
+	}
+
+	public int getMapLength() {
+		return map.length;
+	}
+
+	public int getMapLength(int n) {
+		return map[n].length;
+	}
+
+	public String getMap(int a, int b) {
+		return map[a][b];
 	}
 
 	// Is there a shorter way to do this?
@@ -283,25 +324,6 @@ public class GameEngine {
 		}
 	}
 
-	public int getMapLength() {
-		return map.length;
-	}
-
-	public int getMapLength(int n) {
-		return map[n].length;
-	}
-
-	public String getMap(int a, int b) {
-		return map[a][b];
-	}
-
-	// /**
-	// * Contains prompts of the beginning and end of the game, as well as
-	// message
-	// * handling
-	// */
-	// public void playGame() {
-	// }
 	//
 	// /**
 	// * Handles the random placement of enemies, items and briefcase on the
@@ -309,7 +331,7 @@ public class GameEngine {
 	// */
 	// public void randomPlacement() {
 	// }
-
+	//
 	// // Is there a shorter way to do this?
 	// currently does not check for boundaries
 	public void movingEnemies() {
