@@ -357,7 +357,7 @@ public class GameEngine {
 	}
 
 	public void moveEnemy3() {
-		enemy3 = new Enemy();
+		enemy3.moveEnemy();
 		checkMoveEnemy3();
 	}
 
@@ -375,7 +375,7 @@ public class GameEngine {
 	}
 
 	public void moveEnemy4() {
-		enemy4 = new Enemy();
+		enemy4.moveEnemy();
 		checkMoveEnemy4();
 	}
 
@@ -398,7 +398,7 @@ public class GameEngine {
 	}
 
 	public void moveEnemy5() {
-		enemy5 = new Enemy();
+		enemy5.moveEnemy();
 		checkMoveEnemy5();
 	}
 
@@ -426,7 +426,7 @@ public class GameEngine {
 	}
 
 	public void moveEnemy6() {
-		enemy6 = new Enemy();
+		enemy6.moveEnemy();
 		checkMoveEnemy6();
 	}
 
