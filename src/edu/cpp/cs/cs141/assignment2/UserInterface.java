@@ -170,24 +170,6 @@ public class UserInterface {
 		System.out.println("Debug Mode: ON");
 	}
 
-	public void findingRadar() {
-		System.out.println("Your spidey senses are tingling.");
-	}
-
-	public void findingInvicibility() {
-		System.out
-				.println("You suddenly feel invincible, but it feels to be getting weaker with every passing turn.");
-	}
-
-	public void findingBullet(boolean a) {
-		if (a)
-			System.out
-					.println("Good news, you have found an replacement bullet for your gun.");
-		else
-			System.out
-					.println"(Good and bad news, you have found an replacement bullet, but your gun alreadly has a bullet.");
-	}
-
 	public void gotstabbed(boolean checkLife) {
 		System.out.println("A nearby ninja-assassin has stabbed you.");
 		if (checkLife) {

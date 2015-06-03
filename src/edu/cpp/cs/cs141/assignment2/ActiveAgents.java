@@ -29,16 +29,16 @@ public class ActiveAgents {
 	/**
 	 * 
 	 */
-	// public ActiveAgents() {
-	// createPlayer();
-	// }
+	 public ActiveAgents() {
+	 createPlayer();
+	 }
 
 	public void createPlayer() {
 		location[0] = 8;
 		location[1] = 0;
 	}
 
-	// to be used for loading purposes
+	// to be used for loading purposes?
 	public void setPlayer(int b, int c) {
 		location[0] = b;
 		location[1] = c;
