@@ -35,18 +35,18 @@ public class GameEngine {
 	/**
 	 * 
 	 */
-	private ActiveAgents player = new ActiveAgents();
-	private Enemy enemy1;
-	private Enemy enemy2;
-	private Enemy enemy3;
-	private Enemy enemy4;
-	private Enemy enemy5;
-	private Enemy enemy6;
-	private PowerUps aB = new PowerUps();
-	private PowerUps invin = new PowerUps();
-	private PowerUps rad = new PowerUps();
+	private ActiveAgents briefcase = new ActiveAgents();
+	private Player player = new Player();
+	private Enemy eClass = new Enemy();	
+//	private Enemy[] enemies = new Enemy[6];
+	private Enemy[] enemies;
+	private PowerUps replacementBullet = new PowerUps();
+	private PowerUps invincibility = new PowerUps();
+	private PowerUps radar = new PowerUps();
 
-	private boolean debugMode = false;
+	// remember to change back to "false"
+	// <----------------------------------------------------------------------------
+	private boolean debugMode = true;
 
 	public void debugging() {
 		debugMode = true;
@@ -76,7 +76,7 @@ public class GameEngine {
 		while (player.getArrayRowY() < 9) {
 			showMap();
 			looking();
-			movingEnemies(); // remember to fix this method chain/loop
+			moveEnemies(); // remember to fix this method chain/loop
 		}
 	}
 
@@ -105,6 +105,7 @@ public class GameEngine {
 			break;
 		case 3:
 			// insert saving method HERE
+			uiClass.gameStart();
 			break;
 		case 4:
 			debugging();
@@ -127,6 +128,7 @@ public class GameEngine {
 			break;
 		case 3:
 			// insert saving method HERE
+			uiClass.gameStart();
 			break;
 		case 4:
 			debugging();
@@ -140,10 +142,11 @@ public class GameEngine {
 		// insert method to check position for powerups & boundaries HERE
 	}
 
-	public void shoot(){
-		//insert method for check direction to see if there is an enemy
-		//if there is return turn for uiClass.
+	public void shoot() {
+		// insert method for check direction to see if there is an enemy
+		// if there is return turn for uiClass.
 	}
+
 	public void setBasicMap(int i, int j) {
 		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
 			map[i][j] = "[P]";
@@ -157,26 +160,37 @@ public class GameEngine {
 	}
 
 	public void setMap(int i, int j) {
-		// to be replaced with class constructor loop?
+		// not sure how to shorten this
 		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
 			map[i][j] = "[P]";
-		} else if (i == enemy1.getArrayRowY() && j == enemy1.getArrayColumnX())
+		} else if (i == enemies[0].getArrayRowY()
+				&& j == enemies[0].getArrayColumnX())
 			map[i][j] = "[A]";
-		else if (i == enemy2.getArrayRowY() && j == enemy2.getArrayColumnX())
+		else if (i == enemies[1].getArrayRowY()
+				&& j == enemies[1].getArrayColumnX())
 			map[i][j] = "[A]";
-		else if (i == enemy3.getArrayRowY() && j == enemy3.getArrayColumnX())
+		else if (i == enemies[2].getArrayRowY()
+				&& j == enemies[2].getArrayColumnX())
 			map[i][j] = "[A]";
-		else if (i == enemy4.getArrayRowY() && j == enemy4.getArrayColumnX())
+		else if (i == enemies[3].getArrayRowY()
+				&& j == enemies[3].getArrayColumnX())
 			map[i][j] = "[A]";
-		else if (i == enemy5.getArrayRowY() && j == enemy5.getArrayColumnX())
+		else if (i == enemies[4].getArrayRowY()
+				&& j == enemies[4].getArrayColumnX())
 			map[i][j] = "[A]";
-		else if (i == enemy6.getArrayRowY() && j == enemy6.getArrayColumnX())
+		else if (i == enemies[5].getArrayRowY()
+				&& j == enemies[5].getArrayColumnX())
 			map[i][j] = "[A]";
-		else if (i == aB.getArrayRowY() && j == aB.getArrayColumnX())
+		// else if (i == enemies[6].getArrayRowY()
+		// && j == enemies[6].getArrayColumnX())
+		// map[i][j] = "[A]";
+		else if (i == replacementBullet.getArrayRowY()
+				&& j == replacementBullet.getArrayColumnX())
 			map[i][j] = "[b]";
-		else if (i == invin.getArrayRowY() && j == invin.getArrayColumnX())
+		else if (i == invincibility.getArrayRowY()
+				&& j == invincibility.getArrayColumnX())
 			map[i][j] = "[i]";
-		else if (i == rad.getArrayRowY() && j == rad.getArrayColumnX())
+		else if (i == radar.getArrayRowY() && j == radar.getArrayColumnX())
 			map[i][j] = "[r]";
 		else if (i == 1 || i == 4 || i == 7) {
 			if (j == 1 || j == 4 || j == 7)
@@ -199,263 +213,84 @@ public class GameEngine {
 		return map[a][b];
 	}
 
-	// Is there a shorter way to do this?
+	
+	
+	
+	// (i == player.getArrayRowY() && j == player.getArrayColumnX())
+	public void checkForSpy() {
+		for (int i = 0; i < enemies.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if (player.getArrayRowY() == enemies[i - 1].getArrayRowY())
+					if (player.getArrayColumnX() == enemies[i - 1]
+							.getArrayColumnX()){
+						stabbed(); 
+						 makeEnemies(); //enemies will be repositioned as the player respawns
+						player.createPlayer();
+					}
+			}
+		}
+	}
+	
+	
 	public void makeEnemies() {
-		enemy1 = new Enemy();
-		makeEnemy2();
-		makeEnemy3();
-		makeEnemy4();
-		makeEnemy5();
-		makeEnemy6();
-	}
-
-	public void makeEnemy2() {
-		enemy2 = new Enemy();
-		checkEnemy2();
-	}
-
-	public void checkEnemy2() {
-		if (enemy2.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy2.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				makeEnemy2();
-			}
+		enemies= new Enemy[eClass.getEnemyCount()];
+		for (int i = 0; i < enemies.length; i++) {
+			enemies[i] = new Enemy();
+			checkEnemy(i);
 		}
 	}
 
-	public void makeEnemy3() {
-		enemy3 = new Enemy();
-		checkEnemy3();
+	public void checkEnemy(int i) {
+		if (enemies[i].getArrayRowY() == 1 || enemies[i].getArrayRowY() == 4
+				|| enemies[i].getArrayRowY() == 7)
+			if (enemies[i].getArrayColumnX() == 1
+					|| enemies[i].getArrayColumnX() == 4
+					|| enemies[i].getArrayColumnX() == 7)
+				remakeEnemies(i);
+		if (i != 0)
+			for (int j = 0; j < i; j++) {
+				if (enemies[i].getArrayRowY() == enemies[i - 1].getArrayRowY())
+					if (enemies[i].getArrayColumnX() == enemies[i - 1]
+							.getArrayColumnX())
+						remakeEnemies(i);
+			}
 	}
 
-	public void checkEnemy3() {
-		if (enemy3.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy3.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				makeEnemy3();
-			}
-		}
-		if (enemy3.getArrayRowY() == enemy2.getArrayRowY()) {
-			if (enemy3.getArrayColumnX() == enemy2.getArrayColumnX()) {
-				makeEnemy3();
-			}
-		}
+
+	private void stabbed() {
+		player.lostLife();
+		uiClass.gotstabbed(player.checkLife());
 	}
 
-	public void makeEnemy4() {
-		enemy4 = new Enemy();
-		checkEnemy4();
+	public void remakeEnemies(int i) {
+		enemies[i] = new Enemy();
 	}
 
-	public void checkEnemy4() {
-		if (enemy4.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy4.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				makeEnemy4();
-			}
-		}
-		if (enemy4.getArrayRowY() == enemy2.getArrayRowY()) {
-			if (enemy4.getArrayColumnX() == enemy2.getArrayColumnX()) {
-				makeEnemy4();
-			}
-		}
-		if (enemy4.getArrayRowY() == enemy3.getArrayRowY()) {
-			if (enemy4.getArrayColumnX() == enemy3.getArrayColumnX()) {
-				makeEnemy4();
-			}
+	public void moveEnemies() {
+		for (int i = 0; i < enemies.length; i++) {
+			enemies[i].moveEnemy();
+			checkMoveEnemy(i);
 		}
 	}
 
-	public void makeEnemy5() {
-		enemy5 = new Enemy();
-		checkEnemy5();
+	public void checkMoveEnemy(int i) {
+		if (enemies[i].getArrayRowY() == 1 || enemies[i].getArrayRowY() == 4
+				|| enemies[i].getArrayRowY() == 7)
+			if (enemies[i].getArrayColumnX() == 1
+					|| enemies[i].getArrayColumnX() == 4
+					|| enemies[i].getArrayColumnX() == 7)
+				reMoveEnemies(i);
+		if (i != 0)
+			for (int j = 0; j < i; j++) {
+				if (enemies[i].getArrayRowY() == enemies[i - 1].getArrayRowY())
+					if (enemies[i].getArrayColumnX() == enemies[i - 1]
+							.getArrayColumnX())
+						reMoveEnemies(i);
+			}
 	}
 
-	public void checkEnemy5() {
-		if (enemy5.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy5.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				makeEnemy5();
-			}
-		}
-		if (enemy5.getArrayRowY() == enemy2.getArrayRowY()) {
-			if (enemy5.getArrayColumnX() == enemy2.getArrayColumnX()) {
-				makeEnemy5();
-			}
-		}
-		if (enemy5.getArrayRowY() == enemy3.getArrayRowY()) {
-			if (enemy5.getArrayColumnX() == enemy3.getArrayColumnX()) {
-				makeEnemy5();
-			}
-		}
-		if (enemy5.getArrayRowY() == enemy4.getArrayRowY()) {
-			if (enemy5.getArrayColumnX() == enemy4.getArrayColumnX()) {
-				makeEnemy5();
-			}
-		}
-	}
-
-	public void makeEnemy6() {
-		enemy6 = new Enemy();
-		checkEnemy6();
-	}
-
-	public void checkEnemy6() {
-		if (enemy6.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				makeEnemy6();
-			}
-		}
-		if (enemy6.getArrayRowY() == enemy2.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy2.getArrayColumnX()) {
-				makeEnemy6();
-			}
-		}
-		if (enemy6.getArrayRowY() == enemy3.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy3.getArrayColumnX()) {
-				makeEnemy6();
-			}
-		}
-		if (enemy6.getArrayRowY() == enemy4.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy4.getArrayColumnX()) {
-				makeEnemy6();
-			}
-		}
-		if (enemy6.getArrayRowY() == enemy5.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy5.getArrayColumnX()) {
-				makeEnemy6();
-			}
-		}
-	}
-
-	//
-	// /**
-	// * Handles the random placement of enemies, items and briefcase on the
-	// * playing board array.
-	// */
-	// public void randomPlacement() {
-	// }
-	//
-	// // Is there a shorter way to do this?
-	// currently does not check for boundaries
-	public void movingEnemies() {
-		enemy1.moveEnemy();
-		moveEnemy2();
-		moveEnemy3();
-		moveEnemy4();
-		moveEnemy5();
-		moveEnemy6();
-	}
-
-	public void moveEnemy2() {
-		enemy2.moveEnemy();
-		checkMoveEnemy2();
-	}
-
-	public void checkMoveEnemy2() {
-		if (enemy2.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy2.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				moveEnemy2();
-			}
-		}
-	}
-
-	public void moveEnemy3() {
-		enemy3.moveEnemy();
-		checkMoveEnemy3();
-	}
-
-	public void checkMoveEnemy3() {
-		if (enemy3.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy3.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				moveEnemy3();
-			}
-		}
-		if (enemy3.getArrayRowY() == enemy2.getArrayRowY()) {
-			if (enemy3.getArrayColumnX() == enemy2.getArrayColumnX()) {
-				moveEnemy3();
-			}
-		}
-	}
-
-	public void moveEnemy4() {
-		enemy4.moveEnemy();
-		checkMoveEnemy4();
-	}
-
-	public void checkMoveEnemy4() {
-		if (enemy4.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy4.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				moveEnemy4();
-			}
-		}
-		if (enemy4.getArrayRowY() == enemy2.getArrayRowY()) {
-			if (enemy4.getArrayColumnX() == enemy2.getArrayColumnX()) {
-				moveEnemy4();
-			}
-		}
-		if (enemy4.getArrayRowY() == enemy3.getArrayRowY()) {
-			if (enemy4.getArrayColumnX() == enemy3.getArrayColumnX()) {
-				moveEnemy4();
-			}
-		}
-	}
-
-	public void moveEnemy5() {
-		enemy5.moveEnemy();
-		checkMoveEnemy5();
-	}
-
-	public void checkMoveEnemy5() {
-		if (enemy5.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy5.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				moveEnemy5();
-			}
-		}
-		if (enemy5.getArrayRowY() == enemy2.getArrayRowY()) {
-			if (enemy5.getArrayColumnX() == enemy2.getArrayColumnX()) {
-				moveEnemy5();
-			}
-		}
-		if (enemy5.getArrayRowY() == enemy3.getArrayRowY()) {
-			if (enemy5.getArrayColumnX() == enemy3.getArrayColumnX()) {
-				moveEnemy5();
-			}
-		}
-		if (enemy5.getArrayRowY() == enemy4.getArrayRowY()) {
-			if (enemy5.getArrayColumnX() == enemy4.getArrayColumnX()) {
-				moveEnemy5();
-			}
-		}
-	}
-
-	public void moveEnemy6() {
-		enemy6.moveEnemy();
-		checkMoveEnemy6();
-	}
-
-	public void checkMoveEnemy6() {
-		if (enemy6.getArrayRowY() == enemy1.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy1.getArrayColumnX()) {
-				moveEnemy6();
-			}
-		}
-		if (enemy6.getArrayRowY() == enemy2.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy2.getArrayColumnX()) {
-				moveEnemy6();
-			}
-		}
-		if (enemy6.getArrayRowY() == enemy3.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy3.getArrayColumnX()) {
-				moveEnemy6();
-			}
-		}
-		if (enemy6.getArrayRowY() == enemy4.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy4.getArrayColumnX()) {
-				moveEnemy6();
-			}
-		}
-		if (enemy6.getArrayRowY() == enemy5.getArrayRowY()) {
-			if (enemy6.getArrayColumnX() == enemy5.getArrayColumnX()) {
-				moveEnemy6();
-			}
-		}
+	public void reMoveEnemies(int i) {
+		enemies[i].moveEnemy();
 	}
 
 }

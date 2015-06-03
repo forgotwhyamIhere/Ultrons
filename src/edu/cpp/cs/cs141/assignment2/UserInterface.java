@@ -70,7 +70,7 @@ public class UserInterface {
 	}
 
 	public int mainOptions() {
-		System.out.println("1. New Game \n2. Load Game");
+		System.out.println("1. New Game \n2. Load Game \n3. Quit\n");
 		return kb.nextInt();
 	}
 
@@ -82,6 +82,8 @@ public class UserInterface {
 		case 2:
 			// load game method HERE
 			break;
+		case 3:
+			System.exit(0);
 		}
 	}
 
@@ -109,7 +111,7 @@ public class UserInterface {
 		System.out.println("What would you like to do?");
 		System.out.println("1. Look,");
 		System.out.println("2. Don't Look.");
-		System.out.println("3. Save and Quit");
+		System.out.println("3. Save and Back");
 		System.out.println("4. Activate (Warning can not be undone)");
 		return kb.nextInt();
 	}
@@ -118,12 +120,12 @@ public class UserInterface {
 		System.out.println("What would you like to do?");
 		System.out.println("1. Move");
 		System.out.println("2. Shoot");
-		System.out.println("3. Save and Quit");
+		System.out.println("3. Save and Back");
 		System.out.println("4. Activate (Warning can not be undone)");
 		return kb.nextInt();
 	}
 
-	// method thaaeat checks if enemy is present at the location and returns
+	// method checks if enemy is present at the location and returns
 	// true or false?
 	// Status: not used
 	public void shotEnemy(boolean t) {
@@ -168,4 +170,29 @@ public class UserInterface {
 		System.out.println("Debug Mode: ON");
 	}
 
+	public void findingRadar() {
+		System.out.println("Your spidey senses are tingling.");
+	}
+
+	public void findingInvicibility() {
+		System.out
+				.println("You suddenly feel invincible, but it feels to be getting weaker with every passing turn.");
+	}
+
+	public void findingBullet(boolean a) {
+		if (a)
+			System.out
+					.println("Good news, you have found an replacement bullet for your gun.");
+		else
+			System.out
+					.println"(Good and bad news, you have found an replacement bullet, but your gun alreadly has a bullet.");
+	}
+
+	public void gotstabbed(boolean checkLife) {
+		System.out.println("A nearby ninja-assassin has stabbed you.");
+		if (checkLife) {
+			System.out.println("You have died.");
+			gameStart();
+		}
+	}
 }

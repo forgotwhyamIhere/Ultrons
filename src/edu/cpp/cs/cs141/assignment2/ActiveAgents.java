@@ -29,46 +29,46 @@ public class ActiveAgents {
 	/**
 	 * 
 	 */
-	public ActiveAgents() {
-		createPlayer();
-	}
+	// public ActiveAgents() {
+	// createPlayer();
+	// }
 
 	public void createPlayer() {
 		location[0] = 8;
 		location[1] = 0;
 	}
-	
-	//to be used for loading purposes
+
+	// to be used for loading purposes
 	public void setPlayer(int b, int c) {
 		location[0] = b;
 		location[1] = c;
 	}
-	
-	//Jordan's part to fix to check for boundaries and maybe rooms too
-//	public void moveCheck(int n) {
-//		move(n);
-//		  do {
-//			   if (location[0] < 0){
-//			    location[0]++;
-//			    move(n);
-//			   }
-//			   else if (location[0] > 8){
-//			    location[0]--;
-//			    move(n);
-//			   }
-//			  } while (location[0] < 0 || location[0] > 8);
-//			  do {
-//			   if (location[1] < 0){
-//			    location[1]++;
-//			    move(n);
-//			   }
-//			   else if (location[1] > 8){
-//			    location[1]--;
-//			    move(n);
-//			   }
-//			  } while (location[1] < 0 || location[1] > 8);
-//	}
-//	
+
+	// Jordan's part to fix to check for boundaries and maybe rooms too
+	// public void moveCheck(int n) {
+	// move(n);
+	// do {
+	// if (location[0] < 0){
+	// location[0]++;
+	// move(n);
+	// }
+	// else if (location[0] > 8){
+	// location[0]--;
+	// move(n);
+	// }
+	// } while (location[0] < 0 || location[0] > 8);
+	// do {
+	// if (location[1] < 0){
+	// location[1]++;
+	// move(n);
+	// }
+	// else if (location[1] > 8){
+	// location[1]--;
+	// move(n);
+	// }
+	// } while (location[1] < 0 || location[1] > 8);
+	// }
+	//
 	public void move(int n) {
 		switch (n) {
 		case 1:
@@ -85,8 +85,7 @@ public class ActiveAgents {
 			break;
 		}
 	}
-	
-	
+
 	public void unMove(int n) {
 		switch (n) {
 		case 1:
@@ -103,9 +102,6 @@ public class ActiveAgents {
 			break;
 		}
 	}
-
-
-
 
 	public int getArrayRowY() {
 		return location[0];
@@ -139,9 +135,4 @@ public class ActiveAgents {
 		}
 	}
 
-
-
-
-
-	
 }

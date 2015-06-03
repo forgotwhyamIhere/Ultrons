@@ -9,6 +9,7 @@ package edu.cpp.cs.cs141.assignment2;
  */
 public class Player extends ActiveAgents {
 	private int gunAmmo;
+	private int lives;
 
 	/**
 	 * 
@@ -18,10 +19,28 @@ public class Player extends ActiveAgents {
 		setAmmo();
 	}
 
-	// for loading purposes
+	// for loading purposes?
 	public Player(int a, int b, int c) {
 		gunAmmo = a;
 		setPlayer(b, c);
+		setLives();
+	}
+
+	
+	
+	public void setLives() {
+		lives = 3;
+	}
+
+	public void lostLife() {
+		lives--;
+	}
+
+	public boolean checkLife() {
+		boolean b = false;
+		if (lives == 0)
+			b = true;
+		return b;
 	}
 
 	public void setAmmo() {
