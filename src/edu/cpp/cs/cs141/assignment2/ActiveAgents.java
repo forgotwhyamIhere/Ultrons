@@ -29,9 +29,54 @@ public class ActiveAgents {
 	/**
 	 * 
 	 */
-	 public ActiveAgents() {
-	 createPlayer();
-	 }
+	public ActiveAgents() {
+		createBriefcasee();
+	}
+
+	public void createBriefcasee() {
+		int n = coordinateGenerator();
+		if (n < 9) {
+			switch (n) {
+			case 0:
+				location[0] = 1;
+				location[1] = 1;
+				break;
+			case 1:
+				location[0] = 1;
+				location[1] = 4;
+				break;
+			case 2:
+				location[0] = 1;
+				location[1] = 7;
+				break;
+			case 3:
+				location[0] = 4;
+				location[1] = 1;
+				break;
+			case 4:
+				location[0] = 4;
+				location[1] = 4;
+				break;
+			case 5:
+				location[0] = 4;
+				location[1] = 7;
+				break;
+			case 6:
+				location[0] = 7;
+				location[1] = 1;
+				break;
+			case 7:
+				location[0] = 7;
+				location[1] = 4;
+				break;
+			case 8:
+				location[0] = 7;
+				location[1] = 7;
+				break;
+			}
+		} else
+			createBriefcasee();
+	}
 
 	public void createPlayer() {
 		location[0] = 8;
@@ -127,9 +172,9 @@ public class ActiveAgents {
 		int n = location[0];
 		int m = location[1];
 		// checking for rowY
-		if (n == 1 || n == 4 | n == 7) {
+		if (n == 1 || n == 4 || n == 7) {
 			// and checking for columnX
-			if (m == 1 || m == 4 | m == 7) {
+			if (m == 1 || m == 4 || m == 7) {
 				createLocation();
 			}
 		}

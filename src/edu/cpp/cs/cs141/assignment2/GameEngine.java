@@ -37,15 +37,14 @@ public class GameEngine {
 	 */
 	private ActiveAgents briefcase = new ActiveAgents();
 	private Player player = new Player();
-	private Enemy eClass = new Enemy();	
-//	private Enemy[] enemies = new Enemy[6];
-	private Enemy[] enemies;
+	// private Enemy eClass = new Enemy();
+	private Enemy[] enemies = new Enemy[6];
+	// private Enemy[] enemies;
 	private PowerUps replacementBullet = new PowerUps();
 	private PowerUps invincibility = new PowerUps();
 	private PowerUps radar = new PowerUps();
 
-	// remember to change back to "false"
-	// <----------------------------------------------------------------------------
+	// remember to change back to "false" <-------------------------------------
 	private boolean debugMode = true;
 
 	public void debugging() {
@@ -73,7 +72,8 @@ public class GameEngine {
 	// player.getArrayColumnX());
 
 	public void turns() {
-		while (player.getArrayRowY() < 9) {
+		while (player.checkLife()) {
+			// if (player.checkLife() = false){
 			showMap();
 			looking();
 			moveEnemies(); // remember to fix this method chain/loop
@@ -104,10 +104,12 @@ public class GameEngine {
 			mRs();
 			break;
 		case 3:
+			uiClass.roomResult(checkRoom());
+		case 4:
 			// insert saving method HERE
 			uiClass.gameStart();
 			break;
-		case 4:
+		case 5:
 			debugging();
 			looking();
 			break;
@@ -137,9 +139,57 @@ public class GameEngine {
 		}
 	}
 
+	public int checkRoom() {
+		int n;
+		player.move(3);
+		int i = player.getArrayRowY();
+		int j = player.getArrayColumnX();
+		if (i == 1 || i == 4 || i == 7) {
+			if (j == 1 || j == 4 || j == 7) {
+				if (i == briefcase.getArrayRowY()
+						&& j == briefcase.getArrayColumnX()) {
+					n = 3;
+				} else
+					n = 2;
+			} else
+				n = 1;
+		} else
+			n = 1;
+		player.unMove(3);
+		return n;
+	}
+
 	public void move() {
 		player.move(uiClass.pickDirection());
 		// insert method to check position for powerups & boundaries HERE
+
+	}
+
+	public void checkForEnemy() {
+		int i = player.getArrayRowY();
+		int j = player.getArrayColumnX();
+		if (i == enemies[0].getArrayRowY() && j == enemies[0].getArrayColumnX())
+			reMovePlayer();
+		else if (i == enemies[1].getArrayRowY()
+				&& j == enemies[1].getArrayColumnX())
+			reMovePlayer();
+		else if (i == enemies[2].getArrayRowY()
+				&& j == enemies[2].getArrayColumnX())
+			reMovePlayer();
+		else if (i == enemies[3].getArrayRowY()
+				&& j == enemies[3].getArrayColumnX())
+			reMovePlayer();
+		else if (i == enemies[4].getArrayRowY()
+				&& j == enemies[4].getArrayColumnX())
+			reMovePlayer();
+		else if (i == enemies[5].getArrayRowY()
+				&& j == enemies[5].getArrayColumnX())
+			reMovePlayer();
+	}
+
+	public void reMovePlayer() {
+		// continue here <-----------------------------------------------
+		move();
 	}
 
 	public void shoot() {
@@ -161,7 +211,17 @@ public class GameEngine {
 
 	public void setMap(int i, int j) {
 		// not sure how to shorten this
-		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
+		if (i == briefcase.getArrayRowY() && j == briefcase.getArrayColumnX())
+			map[i][j] = "[C]";
+		else if (i == replacementBullet.getArrayRowY()
+				&& j == replacementBullet.getArrayColumnX())
+			map[i][j] = "[b]";
+		else if (i == invincibility.getArrayRowY()
+				&& j == invincibility.getArrayColumnX())
+			map[i][j] = "[i]";
+		else if (i == radar.getArrayRowY() && j == radar.getArrayColumnX())
+			map[i][j] = "[r]";
+		else if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
 			map[i][j] = "[P]";
 		} else if (i == enemies[0].getArrayRowY()
 				&& j == enemies[0].getArrayColumnX())
@@ -184,14 +244,6 @@ public class GameEngine {
 		// else if (i == enemies[6].getArrayRowY()
 		// && j == enemies[6].getArrayColumnX())
 		// map[i][j] = "[A]";
-		else if (i == replacementBullet.getArrayRowY()
-				&& j == replacementBullet.getArrayColumnX())
-			map[i][j] = "[b]";
-		else if (i == invincibility.getArrayRowY()
-				&& j == invincibility.getArrayColumnX())
-			map[i][j] = "[i]";
-		else if (i == radar.getArrayRowY() && j == radar.getArrayColumnX())
-			map[i][j] = "[r]";
 		else if (i == 1 || i == 4 || i == 7) {
 			if (j == 1 || j == 4 || j == 7)
 				map[i][j] = "[R]";
@@ -213,64 +265,60 @@ public class GameEngine {
 		return map[a][b];
 	}
 
-	
-	
-	
 	// (i == player.getArrayRowY() && j == player.getArrayColumnX())
 	public void checkForSpy() {
 		for (int i = 0; i < enemies.length; i++) {
 			for (int j = 0; j < i; j++) {
 				if (player.getArrayRowY() == enemies[i - 1].getArrayRowY())
 					if (player.getArrayColumnX() == enemies[i - 1]
-							.getArrayColumnX()){
-						stabbed(); 
-						 makeEnemies(); //enemies will be repositioned as the player respawns
+							.getArrayColumnX()) {
+						stabbed();
+						makeEnemies(); // enemies will be repositioned as the
+										// player respawns
 						player.createPlayer();
 					}
 			}
 		}
 	}
-	
-	
-	public void makeEnemies() {
-		enemies= new Enemy[eClass.getEnemyCount()];
-		for (int i = 0; i < enemies.length; i++) {
-			enemies[i] = new Enemy();
-			checkEnemy(i);
-		}
-	}
 
-	public void checkEnemy(int i) {
-		if (enemies[i].getArrayRowY() == 1 || enemies[i].getArrayRowY() == 4
-				|| enemies[i].getArrayRowY() == 7)
-			if (enemies[i].getArrayColumnX() == 1
-					|| enemies[i].getArrayColumnX() == 4
-					|| enemies[i].getArrayColumnX() == 7)
-				remakeEnemies(i);
-		if (i != 0)
-			for (int j = 0; j < i; j++) {
-				if (enemies[i].getArrayRowY() == enemies[i - 1].getArrayRowY())
-					if (enemies[i].getArrayColumnX() == enemies[i - 1]
-							.getArrayColumnX())
-						remakeEnemies(i);
-			}
-	}
-
-
-	private void stabbed() {
-		player.lostLife();
-		uiClass.gotstabbed(player.checkLife());
-	}
-
-	public void remakeEnemies(int i) {
-		enemies[i] = new Enemy();
-	}
+	// public void makeEnemies() {
+	// enemies = new Enemy[eClass.getEnemyCount()];
+	// for (int i = 0; i < enemies.length; i++) {
+	// enemies[i] = new Enemy();
+	// checkEnemy(i);
+	// }
+	// }
+	//
+	// public void checkEnemy(int i) {
+	// if (enemies[i].getArrayRowY() == 1 || enemies[i].getArrayRowY() == 4
+	// || enemies[i].getArrayRowY() == 7)
+	// if (enemies[i].getArrayColumnX() == 1
+	// || enemies[i].getArrayColumnX() == 4
+	// || enemies[i].getArrayColumnX() == 7)
+	// remakeEnemies(i);
+	// if (i != 0)
+	// for (int j = 0; j < i; j++) {
+	// if (enemies[i].getArrayRowY() == enemies[i - 1].getArrayRowY())
+	// if (enemies[i].getArrayColumnX() == enemies[i - 1]
+	// .getArrayColumnX())
+	// remakeEnemies(i);
+	// }
+	// }
+	//
+	// public void remakeEnemies(int i) {
+	// enemies[i] = new Enemy();
+	// }
 
 	public void moveEnemies() {
 		for (int i = 0; i < enemies.length; i++) {
 			enemies[i].moveEnemy();
 			checkMoveEnemy(i);
 		}
+	}
+
+	private void stabbed() {
+		player.lostLife();
+		uiClass.gotstabbed(player.checkLife());
 	}
 
 	public void checkMoveEnemy(int i) {
@@ -291,6 +339,50 @@ public class GameEngine {
 
 	public void reMoveEnemies(int i) {
 		enemies[i].moveEnemy();
+	}
+
+	// strange code, it is stopping the program
+	public void makeEnemies() {
+		for (int i = 0; i < enemies.length; i++) {
+			enemies[i] = new Enemy();
+			checkEnemyBoundary(i);
+			checkOverlappingEnemy(i);
+		}
+	}
+
+	public void checkEnemyBoundary(int i) {
+		if (enemies[i].getArrayRowY() > 5) {
+			if (enemies[i].getArrayColumnX() < 3) {
+				remakeEnemies(i);
+			}
+		}
+		if (enemies[i].getArrayColumnX() < 3) {
+			if (enemies[i].getArrayRowY() > 5) {
+				remakeEnemies(i);
+			}
+		}
+	}
+
+	public void checkOverlappingEnemy(int i) {
+		if (enemies[i].getArrayRowY() == 1 || enemies[i].getArrayRowY() == 4
+				|| enemies[i].getArrayRowY() == 7)
+			if (enemies[i].getArrayColumnX() == 1
+					|| enemies[i].getArrayColumnX() == 4
+					|| enemies[i].getArrayColumnX() == 7)
+				remakeEnemies(i);
+		if (i != 0)
+			for (int j = 0; j < i; j++) {
+				if (enemies[i].getArrayRowY() == enemies[i - 1].getArrayRowY())
+					if (enemies[i].getArrayColumnX() == enemies[i - 1]
+							.getArrayColumnX())
+						remakeEnemies(i);
+			}
+	}
+
+	public void remakeEnemies(int i) {
+		enemies[i] = new Enemy();
+		checkEnemyBoundary(i);
+		checkOverlappingEnemy(i);
 	}
 
 }

@@ -37,9 +37,9 @@ public class Player extends ActiveAgents {
 	}
 
 	public boolean checkLife() {
-		boolean b = false;
+		boolean b = true;
 		if (lives == 0)
-			b = true;
+			b = false;
 		return b;
 	}
 

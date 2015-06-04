@@ -66,11 +66,11 @@ public class UserInterface {
 	}
 
 	private void printGameDetails() {
-		System.out.println("(insert game description here)");
+		System.out.println("(insert catchy game name and description here)");
 	}
 
 	public int mainOptions() {
-		System.out.println("1. New Game \n2. Load Game \n3. Quit\n");
+		System.out.println("1. New Game \n2. Load Game \n3. Quit");
 		return kb.nextInt();
 	}
 
@@ -83,7 +83,8 @@ public class UserInterface {
 			// load game method HERE
 			break;
 		case 3:
-			System.exit(0);
+			endProgram();
+			break;
 		}
 	}
 
@@ -120,11 +121,26 @@ public class UserInterface {
 		System.out.println("What would you like to do?");
 		System.out.println("1. Move");
 		System.out.println("2. Shoot");
-		System.out.println("3. Save and Back");
-		System.out.println("4. Activate (Warning can not be undone)");
+		System.out.println("3. Check room (below)");
+		System.out.println("4. Save and Back");
+		System.out.println("5. Activate (Warning can not be undone)");
 		return kb.nextInt();
 	}
 
+	public void roomResult(int r){
+		switch (r){
+		case 1:
+			System.out.println("There is no room here and you have wasted your turn.");
+			break;
+		case 2:
+			System.out.println("Oh no, this room is empty.");
+			break;
+		case 3:
+			System.out.println("Great Job you have found the 'briefcase'.");
+			gameStart();
+			break;
+		}
+	}
 	// method checks if enemy is present at the location and returns
 	// true or false?
 	// Status: not used
@@ -176,5 +192,10 @@ public class UserInterface {
 			System.out.println("You have died.");
 			gameStart();
 		}
+	}
+	
+	public void endProgram(){
+		System.out.println("Ending program.");
+		System.exit(0);
 	}
 }
