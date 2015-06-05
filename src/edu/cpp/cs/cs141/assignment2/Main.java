@@ -10,12 +10,12 @@
  *   <Jordan Tien, Jaime Lopez, Justin Galloway, Edward Quach>
  */
 package edu.cpp.cs.cs141.assignment2;
-
+import java.io.Serializable;
 /**
  * @author
  *
  */
-public class Main {
+public class Main implements Serializable {
 
 	/**
 	 * Instantializes the game

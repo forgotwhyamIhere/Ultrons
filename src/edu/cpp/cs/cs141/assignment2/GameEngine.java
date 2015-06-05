@@ -11,15 +11,29 @@
  */
 package edu.cpp.cs.cs141.assignment2;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Scanner;
+
 /**
  * @author
  *
  */
-public class GameEngine {
+public class GameEngine implements Serializable {
 	/**
 	 * 
 	 */
 	public UserInterface uiClass;
+
+	/**
+	 * Needs to be transient to avoid being caught in Serialization.
+	 */
+	private transient Scanner kb = new Scanner(System.in);
 
 	/**
 	 * @param userInterface
@@ -37,9 +51,9 @@ public class GameEngine {
 	 */
 	private ActiveAgents briefcase;
 	private Player player;
-//	 private Enemy eClass = new Enemy();
+	// private Enemy eClass = new Enemy();
 	private Enemy[] enemies;
-//	 private Enemy[] enemies;
+	// private Enemy[] enemies;
 	private PowerUps replacementBullet;
 	private PowerUps invincibility;
 	private PowerUps radar;
@@ -65,9 +79,9 @@ public class GameEngine {
 	public void newStart() {
 		briefcase = new ActiveAgents();
 		player = new Player();
-//		enemies = new Enemy[6];
+		// enemies = new Enemy[6];
 		enemies = new Enemy[6];
-//		enemies = new Enemy[eClass.getEnemyCount()];
+		// enemies = new Enemy[eClass.getEnemyCount()];
 		replacementBullet = new PowerUps();
 		invincibility = new PowerUps();
 		radar = new PowerUps();
@@ -82,7 +96,7 @@ public class GameEngine {
 		// while (player.checkLife()=true) {
 		while (player.getArrayRowY() < 9) {
 			// remember to unComment the following line <--------------------
-//			invincibility.decreaseInvincibity();
+			// invincibility.decreaseInvincibity();
 			// if (player.checkLife()){
 			// }
 			showMap();
@@ -115,8 +129,10 @@ public class GameEngine {
 			mRs();
 			break;
 		case 3:
-			// insert saving method HERE
-			uiClass.gameStart();
+			System.out.println("Enter game save name: ");
+			String saveName = kb.nextLine();
+			save(saveName);
+			 uiClass.gameStart();
 			break;
 		case 4:
 			debugging();
@@ -125,7 +141,44 @@ public class GameEngine {
 		}
 	}
 
-	
+	public void save(String fileName) {
+		if (fileName.equals(null) | fileName.length() < 1) {
+			return;
+		}
+
+		FileOutputStream fos;
+		ObjectOutputStream oos;
+		try {
+			fos = new FileOutputStream(fileName + ".dat");
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(this);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		oos = null;
+	}
+
+	public void load(String fileName) throws ClassNotFoundException,
+			IOException {
+		FileInputStream fis = null;
+		GameEngine ge = new GameEngine(uiClass);
+		UserInterface ui = new UserInterface();
+		try {
+			fis = new FileInputStream(fileName + ".dat");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			ge = (GameEngine) ois.readObject();
+			// ui = (UserInterface) ois.readObject();
+			ois.close();
+			fis.close();
+		} catch (FileNotFoundException e) {
+			System.out.println(fileName + " not found.");
+		}
+		// ObjectInputStream ois = new ObjectInputStream(fis);
+		// UserInterface ui = (UserInterface) ois.readObject();
+	}
+
 	public void mRs() {
 		movingOrShooting(uiClass.moveOrShoot());
 	}
@@ -142,8 +195,11 @@ public class GameEngine {
 			uiClass.roomResult(checkRoom());
 			break;
 		case 4:
-			// insert saving method HERE
+			System.out.println("Enter game save name: ");
 			uiClass.gameStart();
+			String saveName = kb.nextLine();
+			save(saveName);
+			 uiClass.gameStart();
 			break;
 		case 5:
 			debugging();
@@ -295,18 +351,10 @@ public class GameEngine {
 			map[i][j] = "[*]";
 	}
 
-	public void setMap(int i, int j) {
+	public void setDebugMap(int i, int j) {
 		// not sure how to shorten this
 		if (i == briefcase.getArrayRowY() && j == briefcase.getArrayColumnX())
 			map[i][j] = "[C]";
-		else if (i == replacementBullet.getArrayRowY()
-				&& j == replacementBullet.getArrayColumnX())
-			map[i][j] = "[b]";
-		else if (i == invincibility.getArrayRowY()
-				&& j == invincibility.getArrayColumnX())
-			map[i][j] = "[i]";
-		else if (i == radar.getArrayRowY() && j == radar.getArrayColumnX())
-			map[i][j] = "[r]";
 		else if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
 			map[i][j] = "[P]";
 		} else if (i == enemies[0].getArrayRowY()
@@ -329,6 +377,14 @@ public class GameEngine {
 			map[i][j] = "[A]";
 		// else if (i == enemies[6].getArrayRowY()
 		// && j == enemies[6].getArrayColumnX())
+		else if (i == replacementBullet.getArrayRowY()
+				&& j == replacementBullet.getArrayColumnX())
+			map[i][j] = "[b]";
+		else if (i == invincibility.getArrayRowY()
+				&& j == invincibility.getArrayColumnX())
+			map[i][j] = "[i]";
+		else if (i == radar.getArrayRowY() && j == radar.getArrayColumnX())
+			map[i][j] = "[r]";
 		// map[i][j] = "[A]";
 		else if (i == 1 || i == 4 || i == 7) {
 			if (j == 1 || j == 4 || j == 7)
@@ -378,34 +434,73 @@ public class GameEngine {
 	// public void remakeEnemies(int i) {
 	// enemies[i] = new Enemy();
 	// }
-
 	public void moveEnemies() {
 		for (int i = 0; i < enemies.length; i++) {
-			enemies[i].moveEnemy();
-			checkMoveEnemy(i);
+			int enemyMovement = enemies[i].moveEnemy();
+			checkMoveEnemy(i, enemyMovement);
 		}
 	}
 
-	public void checkMoveEnemy(int i) {
+	public void checkMoveEnemy(int i, int enemyMovement) {
 		if (enemies[i].getArrayRowY() == 1 || enemies[i].getArrayRowY() == 4
 				|| enemies[i].getArrayRowY() == 7)
 			if (enemies[i].getArrayColumnX() == 1
 					|| enemies[i].getArrayColumnX() == 4
-					|| enemies[i].getArrayColumnX() == 7)
-				reMoveEnemies(i);
-		// change this if condition
-		if (i != 0)
-			for (int j = 0; j < i; j++) {
-				if (enemies[i].getArrayRowY() == enemies[i - 1].getArrayRowY())
-					if (enemies[i].getArrayColumnX() == enemies[i - 1]
-							.getArrayColumnX())
-						reMoveEnemies(i);
+					|| enemies[i].getArrayColumnX() == 7) {
+				reMoveEnemies(i, enemyMovement);
 			}
+		for (int j = 0; j < i; j++) {
+			if (enemies[i].getArrayRowY() == enemies[j].getArrayRowY()) {
+				if (enemies[i].getArrayColumnX() == enemies[j]
+						.getArrayColumnX()) {
+					reMoveEnemies(i, enemyMovement);
+				}
+			}
+		}
+		for (int z = 0; z <= i; z++) {
+			if (enemies[i].getArrayRowY() < 0 || enemies[i].getArrayRowY() > 8) {
+				reMoveEnemies(i, enemyMovement);
+			}
+			if (enemies[i].getArrayColumnX() < 0
+					|| enemies[i].getArrayColumnX() > 8) {
+				reMoveEnemies(i, enemyMovement);
+			}
+		}
 	}
 
-	public void reMoveEnemies(int i) {
+	public void reMoveEnemies(int i, int enemyMovement) {
+		enemies[i].unMove(enemyMovement);
 		enemies[i].moveEnemy();
+		checkMoveEnemy(i, enemyMovement);
 	}
+
+	// public void moveEnemies() {
+	// for (int i = 0; i < enemies.length; i++) {
+	// enemies[i].moveEnemy();
+	// checkMoveEnemy(i);
+	// }
+	// }
+	//
+	// public void checkMoveEnemy(int i) {
+	// if (enemies[i].getArrayRowY() == 1 || enemies[i].getArrayRowY() == 4
+	// || enemies[i].getArrayRowY() == 7)
+	// if (enemies[i].getArrayColumnX() == 1
+	// || enemies[i].getArrayColumnX() == 4
+	// || enemies[i].getArrayColumnX() == 7)
+	// reMoveEnemies(i);
+	// // change this if condition
+	// if (i != 0)
+	// for (int j = 0; j < i; j++) {
+	// if (enemies[i].getArrayRowY() == enemies[i - 1].getArrayRowY())
+	// if (enemies[i].getArrayColumnX() == enemies[i - 1]
+	// .getArrayColumnX())
+	// reMoveEnemies(i);
+	// }
+	// }
+	//
+	// public void reMoveEnemies(int i) {
+	// enemies[i].moveEnemy();
+	// }
 
 	public void makeEnemies() {
 		for (int i = 0; i < enemies.length; i++) {

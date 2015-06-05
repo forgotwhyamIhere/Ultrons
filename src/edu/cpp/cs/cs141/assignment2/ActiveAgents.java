@@ -11,13 +11,14 @@
  */
 package edu.cpp.cs.cs141.assignment2;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * @author
  *
  */
-public class ActiveAgents {
+public class ActiveAgents implements Serializable {
 	// Should this be protected or private?
 	private int[] location = new int[2];
 
@@ -80,7 +81,7 @@ public class ActiveAgents {
 
 	// Although this method states to create the player, it actually set the
 	// player's location to the starting coordinates which allows this method to
-	// be more reusable 
+	// be more reusable
 	public void createPlayer() {
 		location[0] = 8;
 		location[1] = 0;

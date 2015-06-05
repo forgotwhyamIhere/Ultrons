@@ -15,7 +15,9 @@ package edu.cpp.cs.cs141.assignment2;
  * @author
  *
  */
-public class PowerUps extends ActiveAgents {
+import java.io.Serializable;
+
+public class PowerUps extends ActiveAgents implements Serializable {
 	private int invincibleDuration = 0;
 
 	/**

@@ -11,6 +11,8 @@
  */
 package edu.cpp.cs.cs141.assignment2;
 
+import java.io.IOException;
+import java.io.Serializable;
 //import java.util.Random;
 import java.util.Scanner;
 
@@ -18,11 +20,11 @@ import java.util.Scanner;
  * @author
  *
  */
-public class UserInterface {
+public class UserInterface implements Serializable {
 	/**
 	 *
 	 */
-	private Scanner kb = new Scanner(System.in);
+	private transient Scanner kb = new Scanner(System.in);
 	/**
 	 * 
 	 */
@@ -75,12 +77,20 @@ public class UserInterface {
 	}
 
 	public void pickMainOptions(int n) {
+		kb = new Scanner(System.in);
 		switch (n) {
 		case 1:
 			geClass.newStart();
 			break;
 		case 2:
-			// load game method HERE
+			System.out.println("Enter file name: ");
+			String fileName = kb.nextLine();
+			try {
+				geClass.load(fileName);
+			} catch (ClassNotFoundException | IOException e) {
+				e.printStackTrace();
+			}
+			geClass.turns();
 			break;
 		case 3:
 			endProgram();
@@ -115,7 +125,7 @@ public class UserInterface {
 		debugLegend(n);
 		for (int i = 0; i < geClass.getMapLength(); i++) {
 			for (int j = 0; j < geClass.getMapLength(i); j++) {
-				geClass.setMap(i, j);
+				geClass.setDebugMap(i, j);
 				System.out.print(geClass.getMap(i, j));
 			}
 			System.out.println();

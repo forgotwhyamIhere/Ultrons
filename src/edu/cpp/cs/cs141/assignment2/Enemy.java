@@ -20,8 +20,10 @@ import java.util.Random;
  *
  */
 public class Enemy extends ActiveAgents {
-//	Changing this number requires to also change the enemies array in the GameEngine class
+	// Changing this number requires to also change the enemies array in the
+	// GameEngine class
 	int enemyCount = 6;
+
 	/**
 	 * Initializes an enemy.
 	 */
@@ -31,28 +33,29 @@ public class Enemy extends ActiveAgents {
 
 	public void createEnemy() {
 		createLocation();
-		checkNotNearStart();
-		checkNotAtRooms();
+		// checkNotNearStart();
+		// checkNotAtRooms();
 	}
 
-	// Jordan's modified solution
-	public void checkNotNearStart() {
-		if (getArrayRowY() > 5) {
-			if (getArrayColumnX() < 3) { // hope this part is correct, where
-											// enemies are spawn outside of the
-											// safe zone
-				createEnemy();
-			}
-		}
-	}
-	
-	public void lossEnemy(){
+	// // Jordan's modified solution
+	// public void checkNotNearStart() {
+	// if (getArrayRowY() > 5) {
+	// if (getArrayColumnX() < 3) { // hope this part is correct, where
+	// // enemies are spawn outside of the
+	// // safe zone
+	// createEnemy();
+	// }
+	// }
+	// }
+
+	public void lossEnemy() {
 		enemyCount--;
 	}
-	
-	public int getEnemyCount(){
+
+	public int getEnemyCount() {
 		return enemyCount;
 	}
+
 	public int directionGenerator() {
 		int number;
 		Random rN = new Random();
@@ -60,10 +63,11 @@ public class Enemy extends ActiveAgents {
 		return number;
 	}
 
-	public void moveEnemy() {
+	public int moveEnemy() {
 		int n = directionGenerator();
 		n++;
 		move(n);
+		return n;
 	}
 
 	/**

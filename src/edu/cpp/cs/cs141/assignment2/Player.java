@@ -3,11 +3,13 @@
  */
 package edu.cpp.cs.cs141.assignment2;
 
+import java.io.Serializable;
+
 /**
  * @author EQ iii
  *
  */
-public class Player extends ActiveAgents {
+public class Player extends ActiveAgents implements Serializable {
 	private int gunAmmo;
 	private int lives;
 
@@ -26,8 +28,6 @@ public class Player extends ActiveAgents {
 		setLives();
 	}
 
-	
-	
 	public void setLives() {
 		lives = 3;
 	}
@@ -39,6 +39,7 @@ public class Player extends ActiveAgents {
 	public void gainLife() {
 		lives++;
 	}
+
 	public boolean checkLife() {
 		boolean b = false;
 		if (lives == 0)
