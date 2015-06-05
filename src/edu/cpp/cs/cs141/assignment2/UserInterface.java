@@ -88,7 +88,19 @@ public class UserInterface {
 		}
 	}
 
-	public void printBasicMap() {
+	public void debugLegend(int n) {
+		System.out.println("Legend: ");
+		System.out.println("P = Player");
+		System.out.println("A = N");
+		System.out.println("R = Room");
+		System.out.println("b = replacement Bullet");
+		System.out.println("i = Invinciblity");
+		System.out.println("r = Radar");
+		System.out.println("Invinciblity remaining: " + n);
+	}
+
+	public void printBasicMap(int n) {
+		debugLegend(n);
 		for (int i = 0; i < geClass.getMapLength(); i++) {
 			for (int j = 0; j < geClass.getMapLength(i); j++) {
 				geClass.setBasicMap(i, j);
@@ -98,7 +110,9 @@ public class UserInterface {
 		}
 	}
 
-	public void printMap() {
+	// does the debug mode show where briefcase is?
+	public void printMap(int n) {
+		debugLegend(n);
 		for (int i = 0; i < geClass.getMapLength(); i++) {
 			for (int j = 0; j < geClass.getMapLength(i); j++) {
 				geClass.setMap(i, j);
@@ -108,9 +122,33 @@ public class UserInterface {
 		}
 	}
 
+	public void legend(int n) {
+		System.out.println("Legend: ");
+		System.out.println("P = Player");
+		System.out.println("R = Room");
+		System.out.println("Invinciblity remaining: " + n);
+	}
+
+	public void radarMap() {
+		System.out.println("A spider lands on you. /n"
+				+ "It bites you and your spidey senses tingles. /n"
+				+ "You see a vision.");
+		System.out.println("Legend: ");
+		System.out.println("P = Player");
+		System.out.println("R = Room");
+		System.out.println("C = Briefcase");
+		for (int i = 0; i < geClass.getMapLength(); i++) {
+			for (int j = 0; j < geClass.getMapLength(i); j++) {
+				geClass.radarMap(i, j);
+				System.out.print(geClass.getMap(i, j));
+			}
+			System.out.println();
+		}
+	}
+
 	public int lookOptions() {
 		System.out.println("What would you like to do?");
-		System.out.println("1. Look,");
+		System.out.println("1. Look ");
 		System.out.println("2. Don't Look.");
 		System.out.println("3. Save and Back");
 		System.out.println("4. Activate (Warning can not be undone)");
@@ -158,15 +196,35 @@ public class UserInterface {
 	public int pickDirection() {
 		System.out.println("in which direction? \n" + "1. Up \n" + "2. Left \n"
 				+ "3. Down \n" + "4. Right");
-		// response = kb.nextInt();
-		return kb.nextInt();
+		response = kb.nextInt();
+		return response;
 	}
 
 	public int getResponse() {
 		return response;
 	}
 
-	// method not complete
+	public void displayInvincibility() {
+		System.out
+				.println("You have found Invincibility. \n"
+						+ "For the next five turns you can not be hurt by the Ninja-Assassins.");
+	}
+
+	public void intoInvincibility() {
+		System.out
+				.println("Your invincibility protects from walking into the Ninja-Assassin.\n"
+						+ "However this makes it so you can not move there. So");
+	}
+
+	public void getBullet(int n) {
+		System.out.println("You have found the replacement bullet.");
+		if (n == 1)
+			System.out.println("Unfornatutely, your gun still has its bullet.");
+		else
+			System.out.println("Your gun has been reloaded.");
+	}
+
+	// method not complete (Is this needed?)
 	public void hitEnterToContinue() {
 		System.out.println("Please press Enter to continue.");
 	}
@@ -189,12 +247,12 @@ public class UserInterface {
 	}
 
 	public void gotstabbed(boolean checkLife) {
-		System.out
-				.println("A (nearby) ninja-assassin has stabbed you. /n"
-						+ "As you retreat outside to patch your wounds, /n"
-						+ "the (remaining) ninja-assassins have moved about.");
+		System.out.println("A (nearby) ninja-assassin has stabbed you. \n"
+				+ "As you retreat outside to patch your wounds, \n"
+				+ "the (remaining) ninja-assassins have moved about.");
 		if (checkLife) {
-			System.out.println("You have died, because your wounds have reopened.");
+			System.out
+					.println("You have died, because your wounds have reopened.");
 			gameStart();
 		}
 	}
@@ -203,4 +261,5 @@ public class UserInterface {
 		System.out.println("Ending program.");
 		System.exit(0);
 	}
+
 }

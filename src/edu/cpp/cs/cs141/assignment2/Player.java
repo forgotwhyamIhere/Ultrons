@@ -36,6 +36,9 @@ public class Player extends ActiveAgents {
 		lives--;
 	}
 
+	public void gainLife() {
+		lives++;
+	}
 	public boolean checkLife() {
 		boolean b = false;
 		if (lives == 0)

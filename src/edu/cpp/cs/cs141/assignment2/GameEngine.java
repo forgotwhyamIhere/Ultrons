@@ -56,9 +56,9 @@ public class GameEngine {
 	// incomplete b/c does not consider looking view
 	public void showMap() {
 		if (debugMode)
-			uiClass.printMap();
+			uiClass.printMap(invincibility.getInvincibleDuration());
 		else {
-			uiClass.printBasicMap();
+			uiClass.printBasicMap(invincibility.getInvincibleDuration());
 		}
 	}
 
@@ -74,6 +74,8 @@ public class GameEngine {
 	public void turns() {
 		// while (player.checkLife()=true) {
 		while (player.getArrayRowY() < 9) {
+			// remember to unComment the following line <--------------------
+//			invincibility.decreaseInvincibity();
 			// if (player.checkLife()){
 			// }
 			showMap();
@@ -106,18 +108,17 @@ public class GameEngine {
 			mRs();
 			break;
 		case 3:
-			uiClass.roomResult(checkRoom());
-		case 4:
 			// insert saving method HERE
 			uiClass.gameStart();
 			break;
-		case 5:
+		case 4:
 			debugging();
 			looking();
 			break;
 		}
 	}
 
+	
 	public void mRs() {
 		movingOrShooting(uiClass.moveOrShoot());
 	}
@@ -131,10 +132,13 @@ public class GameEngine {
 			// insert check for enemy when shooting Here
 			break;
 		case 3:
+			uiClass.roomResult(checkRoom());
+			break;
+		case 4:
 			// insert saving method HERE
 			uiClass.gameStart();
 			break;
-		case 4:
+		case 5:
 			debugging();
 			mRs();
 			break;
@@ -163,6 +167,14 @@ public class GameEngine {
 
 	public void move() {
 		player.move(uiClass.pickDirection());
+		checkOnTopOf();
+	}
+
+	// public void reMovePlayer() {
+	// move();
+	// }
+
+	public void checkOnTopOf() {
 		// insert method to check position for powerups & boundaries HERE
 		isPlayerOnTopOfEnemy();
 		// isPlayerInRoom(); <----------------------------------------------
@@ -172,12 +184,22 @@ public class GameEngine {
 		isPlayerOnPowerUps(); // <------------------------------------------
 	}
 
-	public void reMovePlayer() {
-		move();
-	}
-
 	public void isPlayerOnPowerUps() {
-		
+		int i = player.getArrayRowY();
+		int j = player.getArrayColumnX();
+		if (i == invincibility.getArrayRowY()
+				&& j == invincibility.getArrayColumnX()) {
+			uiClass.displayInvincibility();
+			invincibility.setInvincible();
+		} else if (i == replacementBullet.getArrayRowY()
+				&& j == replacementBullet.getArrayColumnX()) {
+			uiClass.getBullet(player.checkAmmo());
+			player.setAmmo();
+			replacementBullet.remove();
+		} else if (i == radar.getArrayRowY() && j == radar.getArrayColumnX()) {
+			uiClass.radarMap();
+			radar.remove();
+		}
 	}
 
 	public void shoot() {
@@ -193,8 +215,14 @@ public class GameEngine {
 				if (player.getArrayRowY() == enemies[i - 1].getArrayRowY())
 					if (player.getArrayColumnX() == enemies[i - 1]
 							.getArrayColumnX()) {
-						stabbed();
-						break; // Is this statement necessary?
+						if (invincibility.getInvincibleDuration() > 0) {
+							player.unMove(uiClass.getResponse());
+							uiClass.intoInvincibility();
+							move();
+						} else {
+							stabbed();
+							break; // Is this statement necessary?
+						}
 					}
 			}
 		}
@@ -236,6 +264,21 @@ public class GameEngine {
 	public void setBasicMap(int i, int j) {
 		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
 			map[i][j] = "[P]";
+		} else if (i == 1 || i == 4 || i == 7) {
+			if (j == 1 || j == 4 || j == 7)
+				map[i][j] = "[R]";
+			else
+				map[i][j] = "[*]";
+		} else
+			map[i][j] = "[*]";
+	}
+
+	public void radarMap(int i, int j) {
+		if (i == player.getArrayRowY() && j == player.getArrayColumnX()) {
+			map[i][j] = "[P]";
+		}
+		if (i == briefcase.getArrayRowY() && j == briefcase.getArrayColumnX()) {
+			map[i][j] = "[C]";
 		} else if (i == 1 || i == 4 || i == 7) {
 			if (j == 1 || j == 4 || j == 7)
 				map[i][j] = "[R]";

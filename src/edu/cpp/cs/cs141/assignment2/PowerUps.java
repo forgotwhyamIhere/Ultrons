@@ -16,6 +16,8 @@ package edu.cpp.cs.cs141.assignment2;
  *
  */
 public class PowerUps extends ActiveAgents {
+	private int invincibleDuration = 0;
+
 	/**
 	 * 
 	 */
@@ -43,17 +45,32 @@ public class PowerUps extends ActiveAgents {
 	/**
 	 * 
 	 */
-	public void invincible() {
+	public void setInvincible() {
+		invincibleDuration = 5;
+		remove();
 	}
 
-	/**
-	 * Getter for health
-	 * 
-	 * @return
-	 */
-	public int getHealth() {
-		return 0;
+	public void decreaseInvincibity() {
+		invincibleDuration--;
 	}
+
+	public int getInvincibleDuration() {
+		int n;
+		if (invincibleDuration < 0)
+			n = 0;
+		else
+			n = invincibleDuration;
+		return n;
+	}
+
+	// /**
+	// * Getter for health
+	// *
+	// * @return
+	// */
+	// public int getHealth() {
+	// return 0;
+	// }
 
 	/**
 	 * Getter for powerup status?
@@ -64,4 +81,8 @@ public class PowerUps extends ActiveAgents {
 		return null;
 	}
 
+	public void remove() {
+		for (int i = 0; i < 10; i++)
+			move(4);
+	}
 }
