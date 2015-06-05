@@ -35,14 +35,14 @@ public class GameEngine {
 	/**
 	 * 
 	 */
-	private ActiveAgents briefcase = new ActiveAgents();
-	private Player player = new Player();
-	// private Enemy eClass = new Enemy();
-	private Enemy[] enemies = new Enemy[6];
-	// private Enemy[] enemies;
-	private PowerUps replacementBullet = new PowerUps();
-	private PowerUps invincibility = new PowerUps();
-	private PowerUps radar = new PowerUps();
+	private ActiveAgents briefcase;
+	private Player player;
+//	 private Enemy eClass = new Enemy();
+	private Enemy[] enemies;
+//	 private Enemy[] enemies;
+	private PowerUps replacementBullet;
+	private PowerUps invincibility;
+	private PowerUps radar;
 
 	// remember to change back to "false" <-------------------------------------
 	private boolean debugMode = true;
@@ -63,7 +63,14 @@ public class GameEngine {
 	}
 
 	public void newStart() {
-		// uiClass.lookOptions();
+		briefcase = new ActiveAgents();
+		player = new Player();
+//		enemies = new Enemy[6];
+		enemies = new Enemy[6];
+//		enemies = new Enemy[eClass.getEnemyCount()];
+		replacementBullet = new PowerUps();
+		invincibility = new PowerUps();
+		radar = new PowerUps();
 		makeEnemies();
 		turns();
 	}
