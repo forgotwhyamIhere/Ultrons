@@ -132,7 +132,7 @@ public class GameEngine implements Serializable {
 			System.out.println("Enter game save name: ");
 			String saveName = kb.nextLine();
 			save(saveName);
-			 uiClass.gameStart();
+			uiClass.gameStart();
 			break;
 		case 4:
 			debugging();
@@ -189,7 +189,7 @@ public class GameEngine implements Serializable {
 			move();
 			break;
 		case 2:
-			// insert check for enemy when shooting Here
+			uiClass.shotEnemy(shoot(uiClass.lookOptions()));
 			break;
 		case 3:
 			uiClass.roomResult(checkRoom());
@@ -199,13 +199,66 @@ public class GameEngine implements Serializable {
 			uiClass.gameStart();
 			String saveName = kb.nextLine();
 			save(saveName);
-			 uiClass.gameStart();
+			uiClass.gameStart();
 			break;
 		case 5:
 			debugging();
 			mRs();
 			break;
 		}
+	}
+
+	public int shoot(int n) {
+		int r = 6;
+		player.move(n);
+		int i = player.getArrayRowY();
+		int j = player.getArrayColumnX();
+		player.move(n);
+		int a = player.getArrayRowY();
+		int b = player.getArrayColumnX();
+		player.unMove(n);
+		player.unMove(n);
+		if (player.checkAmmo() == 1) {
+			if (i == enemies[0].getArrayRowY()
+					&& j == enemies[0].getArrayColumnX()) {
+				r = 1;
+				shotEnemy(0);
+			} else if (i == enemies[1].getArrayRowY()
+					&& j == enemies[1].getArrayColumnX()) {
+				r = 1;
+				shotEnemy(1);
+			} else if (i == enemies[2].getArrayRowY()
+					&& j == enemies[2].getArrayColumnX()) {
+				r = 1;
+				shotEnemy(2);
+			} else if (i == enemies[3].getArrayRowY()
+					&& j == enemies[3].getArrayColumnX()) {
+				r = 1;
+				shotEnemy(3);
+			} else if (i == enemies[4].getArrayRowY()
+					&& j == enemies[4].getArrayColumnX()) {
+				r = 1;
+				shotEnemy(4);
+			} else if (i == enemies[5].getArrayRowY()
+					&& j == enemies[5].getArrayColumnX()) {
+				r = 1;
+				shotEnemy(5);
+			} else {
+				if (i == 1 || i == 4 || i == 7) {
+					if (j == 1 || j == 4 || j == 7) {
+						r = 2;
+					} else {
+//not done
+					}
+				}
+			}
+		} else
+			r = 5;
+		return r;
+	}
+
+	public void shotEnemy(int e) {
+		enemies[e].die();
 	}
 
 	public int checkRoom() {
@@ -263,11 +316,6 @@ public class GameEngine implements Serializable {
 			uiClass.radarMap();
 			radar.remove();
 		}
-	}
-
-	public void shoot() {
-		// insert method for check direction to see if there is an enemy
-		// if there is return turn for uiClass.
 	}
 
 	// reread method, it seems to check for player at enemies current position

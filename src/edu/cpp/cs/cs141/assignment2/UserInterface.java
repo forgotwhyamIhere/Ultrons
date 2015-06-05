@@ -191,15 +191,29 @@ public class UserInterface implements Serializable {
 		}
 	}
 
-	// method checks if enemy is present at the location and returns
-	// true or false?
-	// Status: not used
-	public void shotEnemy(boolean t) {
-		if (t) {
-			System.out.println("You hit the ninja. It had to be done.");
-		} else {
+	public void shotEnemy(int t) {
+		switch (t) {
+		case 1:
+			System.out
+					.println("You hit the ninja at point blank. It had to be done.");
+			break;
+		case 2:
+			System.out
+					.println("Your shot has hit some kind of wall or barrier.");
+			break;
+		case 3:
+			System.out
+					.println("A Ninja-Assassin has been hit by your distance bullet.");
+			break;
+		case 4:
 			System.out
 					.println("You thought it was a ninja, but it was just some dust or something.");
+
+			break;
+		case 5:
+			System.out
+					.println("You try pulling the trigger but nothing happenned.");
+			break;
 		}
 	}
 
