@@ -59,7 +59,7 @@ public class GameEngine implements Serializable {
 	private PowerUps radar;
 
 	// remember to change back to "false" <-------------------------------------
-	private boolean debugMode = true;
+	private boolean debugMode = false;
 
 	public void debugging() {
 		debugMode = true;
@@ -96,7 +96,7 @@ public class GameEngine implements Serializable {
 		// while (player.checkLife()=true) {
 		while (player.getArrayRowY() < 9) {
 			// remember to unComment the following line <--------------------
-			// invincibility.decreaseInvincibity();
+			 invincibility.decreaseInvincibity();
 			// if (player.checkLife()){
 			// }
 			showMap();
@@ -247,11 +247,35 @@ public class GameEngine implements Serializable {
 				if (i == 1 || i == 4 || i == 7) {
 					if (j == 1 || j == 4 || j == 7) {
 						r = 2;
-					} else {
-//not done
 					}
-				}else{
-					
+				} else {
+					if (a == enemies[0].getArrayRowY()
+							&& b == enemies[0].getArrayColumnX()) {
+						r = 3;
+						shotEnemy(0);
+					} else if (a == enemies[1].getArrayRowY()
+							&& b == enemies[1].getArrayColumnX()) {
+						r = 3;
+						shotEnemy(1);
+					} else if (a == enemies[2].getArrayRowY()
+							&& b == enemies[2].getArrayColumnX()) {
+						r = 3;
+						shotEnemy(2);
+					} else if (a == enemies[3].getArrayRowY()
+							&& b == enemies[3].getArrayColumnX()) {
+						r = 3;
+						shotEnemy(3);
+					} else if (a == enemies[4].getArrayRowY()
+							&& b == enemies[4].getArrayColumnX()) {
+						r = 3;
+						shotEnemy(4);
+					} else if (a == enemies[5].getArrayRowY()
+							&& b == enemies[5].getArrayColumnX()) {
+						r = 3;
+						shotEnemy(5);
+					} else {
+						r = 4;
+					}
 				}
 			}
 		} else
