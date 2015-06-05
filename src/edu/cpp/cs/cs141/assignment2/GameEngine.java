@@ -72,8 +72,10 @@ public class GameEngine {
 	// player.getArrayColumnX());
 
 	public void turns() {
-		while (player.checkLife()) {
-			// if (player.checkLife() = false){
+		// while (player.checkLife()=true) {
+		while (player.getArrayRowY() < 9) {
+			// if (player.checkLife()){
+			// }
 			showMap();
 			looking();
 			moveEnemies(); // remember to fix this method chain/loop
@@ -162,39 +164,73 @@ public class GameEngine {
 	public void move() {
 		player.move(uiClass.pickDirection());
 		// insert method to check position for powerups & boundaries HERE
-
-	}
-
-	public void checkForEnemy() {
-		int i = player.getArrayRowY();
-		int j = player.getArrayColumnX();
-		if (i == enemies[0].getArrayRowY() && j == enemies[0].getArrayColumnX())
-			reMovePlayer();
-		else if (i == enemies[1].getArrayRowY()
-				&& j == enemies[1].getArrayColumnX())
-			reMovePlayer();
-		else if (i == enemies[2].getArrayRowY()
-				&& j == enemies[2].getArrayColumnX())
-			reMovePlayer();
-		else if (i == enemies[3].getArrayRowY()
-				&& j == enemies[3].getArrayColumnX())
-			reMovePlayer();
-		else if (i == enemies[4].getArrayRowY()
-				&& j == enemies[4].getArrayColumnX())
-			reMovePlayer();
-		else if (i == enemies[5].getArrayRowY()
-				&& j == enemies[5].getArrayColumnX())
-			reMovePlayer();
+		isPlayerOnTopOfEnemy();
+		// isPlayerInRoom(); <----------------------------------------------
+		// isPlayerOutofMap(); <--------------------------------------------
+		// these (not all) have to be under a single conditional statement
+		// to prevent overlap of the reMovePlayer method?
+		isPlayerOnPowerUps(); // <------------------------------------------
 	}
 
 	public void reMovePlayer() {
-		// continue here <-----------------------------------------------
 		move();
+	}
+
+	public void isPlayerOnPowerUps() {
+		
 	}
 
 	public void shoot() {
 		// insert method for check direction to see if there is an enemy
 		// if there is return turn for uiClass.
+	}
+
+	// reread method, it seems to check for player at enemies current position
+	// (i == player.getArrayRowY() && j == player.getArrayColumnX())
+	public void isPlayerOnTopOfEnemy() {
+		for (int i = 0; i < enemies.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if (player.getArrayRowY() == enemies[i - 1].getArrayRowY())
+					if (player.getArrayColumnX() == enemies[i - 1]
+							.getArrayColumnX()) {
+						stabbed();
+						break; // Is this statement necessary?
+					}
+			}
+		}
+	}
+
+	// Alternative method version for previous method
+	// // change to die by walking into enemy
+	// public void checkForEnemy() {
+	// int i = player.getArrayRowY();
+	// int j = player.getArrayColumnX();
+	// if (i == enemies[0].getArrayRowY() && j == enemies[0].getArrayColumnX())
+	// reMovePlayer();
+	// else if (i == enemies[1].getArrayRowY()
+	// && j == enemies[1].getArrayColumnX())
+	// reMovePlayer();
+	// else if (i == enemies[2].getArrayRowY()
+	// && j == enemies[2].getArrayColumnX())
+	// reMovePlayer();
+	// else if (i == enemies[3].getArrayRowY()
+	// && j == enemies[3].getArrayColumnX())
+	// reMovePlayer();
+	// else if (i == enemies[4].getArrayRowY()
+	// && j == enemies[4].getArrayColumnX())
+	// reMovePlayer();
+	// else if (i == enemies[5].getArrayRowY()
+	// && j == enemies[5].getArrayColumnX())
+	// stabbed();
+	// }
+
+	private void stabbed() {
+		player.lostLife();
+		uiClass.gotstabbed(player.checkLife());
+		player.createPlayer();
+		makeEnemies(); // enemies will be repositioned as the
+		// player respawns
+		turns();
 	}
 
 	public void setBasicMap(int i, int j) {
@@ -265,22 +301,6 @@ public class GameEngine {
 		return map[a][b];
 	}
 
-	// (i == player.getArrayRowY() && j == player.getArrayColumnX())
-	public void checkForSpy() {
-		for (int i = 0; i < enemies.length; i++) {
-			for (int j = 0; j < i; j++) {
-				if (player.getArrayRowY() == enemies[i - 1].getArrayRowY())
-					if (player.getArrayColumnX() == enemies[i - 1]
-							.getArrayColumnX()) {
-						stabbed();
-						makeEnemies(); // enemies will be repositioned as the
-										// player respawns
-						player.createPlayer();
-					}
-			}
-		}
-	}
-
 	// public void makeEnemies() {
 	// enemies = new Enemy[eClass.getEnemyCount()];
 	// for (int i = 0; i < enemies.length; i++) {
@@ -316,11 +336,6 @@ public class GameEngine {
 		}
 	}
 
-	private void stabbed() {
-		player.lostLife();
-		uiClass.gotstabbed(player.checkLife());
-	}
-
 	public void checkMoveEnemy(int i) {
 		if (enemies[i].getArrayRowY() == 1 || enemies[i].getArrayRowY() == 4
 				|| enemies[i].getArrayRowY() == 7)
@@ -328,6 +343,7 @@ public class GameEngine {
 					|| enemies[i].getArrayColumnX() == 4
 					|| enemies[i].getArrayColumnX() == 7)
 				reMoveEnemies(i);
+		// change this if condition
 		if (i != 0)
 			for (int j = 0; j < i; j++) {
 				if (enemies[i].getArrayRowY() == enemies[i - 1].getArrayRowY())
@@ -341,7 +357,6 @@ public class GameEngine {
 		enemies[i].moveEnemy();
 	}
 
-	// strange code, it is stopping the program
 	public void makeEnemies() {
 		for (int i = 0; i < enemies.length; i++) {
 			enemies[i] = new Enemy();

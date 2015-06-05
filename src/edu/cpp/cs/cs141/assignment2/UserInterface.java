@@ -127,10 +127,11 @@ public class UserInterface {
 		return kb.nextInt();
 	}
 
-	public void roomResult(int r){
-		switch (r){
+	public void roomResult(int r) {
+		switch (r) {
 		case 1:
-			System.out.println("There is no room here and you have wasted your turn.");
+			System.out
+					.println("There is no room here and you have wasted your turn.");
 			break;
 		case 2:
 			System.out.println("Oh no, this room is empty.");
@@ -141,6 +142,7 @@ public class UserInterface {
 			break;
 		}
 	}
+
 	// method checks if enemy is present at the location and returns
 	// true or false?
 	// Status: not used
@@ -187,14 +189,17 @@ public class UserInterface {
 	}
 
 	public void gotstabbed(boolean checkLife) {
-		System.out.println("A nearby ninja-assassin has stabbed you.");
+		System.out
+				.println("A (nearby) ninja-assassin has stabbed you. /n"
+						+ "As you retreat outside to patch your wounds, /n"
+						+ "the (remaining) ninja-assassins have moved about.");
 		if (checkLife) {
-			System.out.println("You have died.");
+			System.out.println("You have died, because your wounds have reopened.");
 			gameStart();
 		}
 	}
-	
-	public void endProgram(){
+
+	public void endProgram() {
 		System.out.println("Ending program.");
 		System.exit(0);
 	}

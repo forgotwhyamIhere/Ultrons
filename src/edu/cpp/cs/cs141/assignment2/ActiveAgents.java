@@ -78,6 +78,9 @@ public class ActiveAgents {
 			createBriefcasee();
 	}
 
+	// Although this method states to create the player, it actually set the
+	// player's location to the starting coordinates which allows this method to
+	// be more reusable 
 	public void createPlayer() {
 		location[0] = 8;
 		location[1] = 0;
